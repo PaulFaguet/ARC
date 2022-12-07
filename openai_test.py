@@ -16,7 +16,7 @@ sub_col1, sub_col2 = st.columns(2)
 with col1:
     language = st.radio("Choisissez une langue :", ('Français', 'Anglais', 'Italien', 'Allemand', 'Espagnol', 'Portugais'))
 with col2:
-    algo = st.radio("Choisissez un algorithme :", ('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus versatil et polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes.")
+    algo = st.radio("Choisissez un algorithme :", ('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes.")
 
 with sub_col1:
     words_number = st.slider("Choisissez le nombre de mots à générer :", 50, 2000, (250, 750), 50)
