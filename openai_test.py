@@ -15,7 +15,7 @@ col1, col2 = st.columns(2)
 sub_col1, sub_col2 = st.columns(2)
 
 with col1:
-    language = st.multiselect("Choisissez une ou plusieurs langue(s):", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'], help="Choisissez une ou plusieurs langues, la traduction est gérée directement selon les langages choisis.")
+    language = st.multiselect("Choisissez une ou plusieurs langue(s) :", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'], help="Choisissez une ou plusieurs langues, la traduction est gérée directement selon les langages choisis.")
 
 with col2:
     algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes https://beta.openai.com/docs/models/gpt-3")
@@ -43,6 +43,7 @@ df_examples = pd.DataFrame(
     ], 
     index=['1', '2', '3', '4', '5', '6', '7', '8', '9']
 )
+
 st.table(df_examples)
 
 st.write("Voici la page des exemples d'utilisation de l'API de OpenAI : https://beta.openai.com/examples")
@@ -62,4 +63,5 @@ response = openai.Completion.create(
 
 # st.write(text)
 
-st.write(response['choices'][0]['text'])
+with st.sidebar:
+    st.write(response['choices'][0]['text'])
