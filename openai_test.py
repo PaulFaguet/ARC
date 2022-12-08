@@ -15,9 +15,10 @@ col1, col2 = st.columns(2)
 sub_col1, sub_col2 = st.columns(2)
 
 with col1:
-    language = st.multiselect("Choisissez une langue :", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'],)
+    language = st.multiselect("Choisissez une langue :", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'], help="Choisissez une ou plusieurs langues, la traduction est gérée directement selon les langages choisis.")
+
 with col2:
-    algo = st.radio("Choisissez un algorithme :", ('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes https://beta.openai.com/docs/models/gpt-3")
+    algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes https://beta.openai.com/docs/models/gpt-3")
 
 with sub_col1:
     words_number = st.slider("Choisissez le nombre de mots à générer :", 50, 2000, (250, 750), 50, help="Un token correspond plus ou moins à une syllabe. 'Chat' = 1 token, 'Montagne' = 3 tokens, 'Sarkozy' = 4 tokens car mot peu commun.")
@@ -36,41 +37,21 @@ df_examples = pd.DataFrame(
         ['Générateur de structure de texte', 'Crée un plan de dissertation en rapport avec les caves à vin et leurs détails techniques'],
         ['Générateur de texte à partie de mots/phrases clé(e)s', 'Ecrit un texte en rapport avec les caves à vin en te basant sur ces mots-clés : cave, vin, température, humidité, Ma Cave à Vin, blog, passion, etc.'],
         ['Extracteur de mots-clés', 'Extrait les mots clés de ce texte : [entrer un texte]'],
-        ['Traducteur', 'Traduit ce texte en 1. anglais, 2. espagnol, et 3. portugais : [entrer un texte]'],
+        # ['Traducteur', 'Traduit ce texte en 1. anglais, 2. espagnol, et 3. portugais : [entrer un texte]'],
         ['Résumé de texte', 'Résume ce texte : [entrer un texte]'],
         ['Utilisation d\'un pronom différent', 'Ecrit un texte à propos des caves à vins en utilisant le pronom "je"'],
     ], 
-    index=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    index=['1', '2', '3', '4', '5', '6', '7', '8', '9']
 )
 st.table(df_examples)
 
 st.write("Voici la page des exemples d'utilisation de l'API de OpenAI : https://beta.openai.com/examples")
 
-# keywords = st.text_input("Entrez les mots clés à utiliser pour la génération de texte, séparez les d'une virgule :")
-# keywords = keywords.lower().split(", ")
-# st.write(keywords)
-
-# structure = st.radio("Choisissez une structure :", options=('Personnalisée', 'Classique (H1 - H2 - H2)', 'Flaubert (H1 - H2 H3 - H2 H3'))
-
-
 input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :")
 
 st.button('Générer le texte')
 
-# if structure == 'Classique (H1 - H2 - H2)':
-#     input = f"""
-#     Respecte la structure suivante :
-#     <h1>[CAVE]</h1>
-#     <h2>Qu'est ce qu'une [CAVE] ?</h2>
-#     <h2>Comment choisir sa cave [CAVE] ?</h2>
-#     <h2>Quelles marques de [CAVE] proposées sur Ma Cave a Vin ?</h2>
-#     <h2>Nos conseils pour l'achat de votre [CAVE]</h2>
-#     <h2>Comparer les [CAVE]</h2>
-#     <h2>Quelle température pour une [CAVE] ?</h2>
-#     <h2>Où installer sa [CAVE] ?</h2>
-#     """
-#     st.write(input)
-text = f"{input}. Rédige un texte entre {words_number[0]} et {words_number[1]} mots. Traduction en {language}."
+text = f"{input}. Rédige un texte entre {words_number[0]} et {words_number[1]} mots. Traduction en {', '.join(language)}."
 
 response = openai.Completion.create(
     engine = algo,
