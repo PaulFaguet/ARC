@@ -86,10 +86,14 @@ if file_input and recipients:
         # st.write(response['choices'][0]['text'])
 
         file.loc[row.Index, 'Résultat'] = response['choices'][0]['text']
-    file.to_excel('result.xlsx', index=False)
-    try:
-        sendMail('result.xlsx', [recipients])
-        st.success("Mail envoyé")
-    except:
-        st.error("Erreur lors de l'envoi du mail")
+        
+    file_csv = convert_df(file)
+    st.download_button(
+        label="Download data as CSV",
+        data=file_csv,
+        file_name='result.csv',
+        mime='text/csv',
+    )
+    # file.to_excel('result.xlsx', index=False)
+
     
