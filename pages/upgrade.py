@@ -9,7 +9,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 import smtplib
 
-load_dotenv()
+# load_dotenv()
 
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
@@ -18,9 +18,14 @@ def convert_df(df):
 def sendMail(path_to_results_file, recipients):
     
     recipients = list(recipients)
-    smtp_axess = 'smtp.axess.fr'
-    user_axess = 'monitoring-adcom@axess.fr'
-    port = 25
+    # smtp_axess = os.getenv('TNR_SMTP_AXESS')
+    # user_axess = os.getenv('TNR_USER_AXESS')
+    # port = os.getenv('TNR_PORT_MAIL')
+    
+    smtp_axess = st.secrets["TNR_SMTP_AXESS"]
+    user_axess = st.secrets["TNR_USER_AXESS"]
+    port = st.secrets["TNR_PORT_MAIL"]
+    
     
     msg = MIMEMultipart()
     msg['Subject'] = f"Génération de textes avec OpenAI"
