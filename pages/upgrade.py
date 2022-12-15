@@ -46,7 +46,8 @@ def sendMail(path_to_results_file, recipients):
 st.title("XLSX")
 
 file_input = st.file_uploader("Upload a file", type="xlsx")
-recipients = st.text_input("Destinataire", value="paul.faguet@axess.fr")
+# recipients = st.text_input("Destinataire", value="paul.faguet@axess.fr")
+recipients = st.text_input("Destinataire")
 
 if file_input and recipients:
     st.success("File uploaded")
