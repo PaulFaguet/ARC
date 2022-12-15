@@ -17,7 +17,7 @@ def convert_df(df):
 
 def sendMail(path_to_results_file, recipients):
     
-    recipients = list(recipients)
+    recipients = recipients.split(',')
     # smtp_axess = os.getenv('TNR_SMTP_AXESS')
     # user_axess = os.getenv('TNR_USER_AXESS')
     # port = os.getenv('TNR_PORT_MAIL')
@@ -87,5 +87,9 @@ if file_input and recipients:
 
         file.loc[row.Index, 'Résultat'] = response['choices'][0]['text']
     file.to_excel('result.xlsx', index=False)
-    sendMail('result.xlsx', [recipients])
+    try:
+        sendMail('result.xlsx', [recipients])
+        st.success("Mail envoyé")
+    except:
+        st.error("Erreur lors de l'envoi du mail")
     
