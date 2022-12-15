@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import openai
 import os 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -89,14 +89,3 @@ if file_input and recipients:
     file.to_excel('result.xlsx', index=False)
     sendMail('result.xlsx', [recipients])
     
-
-
-import numpy as np 
-# create a random df wih string
-df_test = pd.DataFrame(np.random.randint(0,100,size=(100, 4)), columns=list('ABCD'))
-
-for row in df_test.itertuples():
-    df_test.loc[row.Index, 'A'] = 'test'
-    df_test.loc[row.Index, 'B'] = 'test'
-    df_test.loc[row.Index, 'C'] = 'test'
-    df_test.loc[row.Index, 'D'] = 'test'
