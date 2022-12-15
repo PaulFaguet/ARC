@@ -59,11 +59,14 @@ if file_input:
     st.table(file)
     
     file.columns = file.columns.str.replace(' ', '_')
-
+    # erase the content of the file result.yaml
+    with open("result.txt", "w", encoding='utf-8') as f:
+        f.write('')
     for row in file.itertuples():
         sujet = row.Sujet
         type = row.Type_de_page 
         consigne = row.Consignes
+        client = row.Client
         structure = row.Structure
         keywords = row.Mots_clés
         nombre_mots = row.Nombre_de_mots
@@ -84,15 +87,22 @@ if file_input:
         # print(response)
         
         file.loc[row.Index, 'Résultat'] = response 
-        
+        with open("result.txt", "a", encoding='utf-8') as f:
+            f.write(f'Client : {client}\n')
+            f.write(f'Sujet : {sujet}\n')
+            f.write(response)
+            f.write('\n---\n')
+            
     # file.to_json('result.json', orient='records', indent=4, force_ascii=False)
-    file_json = convert_df(file)
-    st.download_button(
-        label="Download data as JSON",
-        data=file_json,
-        file_name='result.json',
-        mime='application/json',
-    )
+    # file_json = convert_df(file)
+    with open("result.txt", "r", encoding='utf-8') as f:
+        resp = f.read()
+        st.download_button(
+            label="Download data as JSON",
+            data=resp,
+            file_name='result.txt',
+            mime='text/plain',
+        )
 
 
 
