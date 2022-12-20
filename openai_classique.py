@@ -2,11 +2,11 @@ import streamlit as st
 import os
 import openai 
 import pandas as pd 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
-load_dotenv()
+# load_dotenv()
 
 # DEV
 openai.api_key = os.getenv("OPENAI_API_KEY")
