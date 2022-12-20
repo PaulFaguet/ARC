@@ -144,6 +144,7 @@ Sujet : {sujet}
 Flesch : {flesch}
 Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari})
 Reading time : environ {rt} {"secondes" if rt < 60 else "minutes"}
+Nombre de mots : {len(response.split())}
 ---
 {response}
 ---
