@@ -2,6 +2,11 @@ import streamlit as st
 import os
 import openai 
 import pandas as pd 
+from dotenv import load_dotenv
+
+st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
+
+load_dotenv()
 
 # DEV
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -44,24 +49,27 @@ df_examples = pd.DataFrame(
     index=['1', '2', '3', '4', '5', '6', '7', '8', '9']
 )
 
-st.table(df_examples)
+with st.sidebar:
+    st.header("Exemples d'utilisation")
+    st.table(df_examples)
 
 st.write("Voici la page des exemples d'utilisation de l'API de OpenAI : https://beta.openai.com/examples")
 
 input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :")
 
-st.button('Générer le texte')
+
 
 text = f"{input}. Rédige un texte entre {words_number[0]} et {words_number[1]} mots. Traduction en {', '.join(language)}."
-
-response = openai.Completion.create(
-    engine = algo,
-    prompt = text,
-    temperature= temperature,
-    max_tokens= 1000
-)
-
-# st.write(text)
-
-with st.sidebar:
+if st.button('Générer le texte'):
+    response = openai.Completion.create(
+        engine = algo,
+        prompt = text,
+        temperature= temperature,
+        max_tokens= 1000
+    )
+    # create a separated line
+    st.write('---')
     st.write(response['choices'][0]['text'])
+
+
+
