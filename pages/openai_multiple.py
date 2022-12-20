@@ -9,7 +9,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 import smtplib
 from io import BytesIO
-import xlsxwriter
+from xlsxwriter import Workbook
 # from bert_score import score 
 from nltk.tokenize import word_tokenize
 import textstat as ts
@@ -59,7 +59,7 @@ st.title("OPEN AI")
 
 
 output = BytesIO()
-wb = xlsxwriter.Workbook(output, {'in_memory': True})
+wb = Workbook(output, {'in_memory': True})
 ws = wb.add_worksheet()
 
 with wb:
