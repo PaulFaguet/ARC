@@ -55,7 +55,7 @@ def sendMail(path_to_results_file, recipients):
     return 
 
 def calculate_cost(tokens):
-    return round(tokens/1000, 2) * 0.02
+    return ceil(tokens/1000) * 0.02
 
 
 st.set_page_config(layout="wide")
