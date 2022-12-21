@@ -13,7 +13,7 @@ from xlsxwriter import Workbook
 # from bert_score import score 
 import nltk
 import textstat as ts
-from math import ceil 
+from math import ceil
 
 # load_dotenv()
 nltk.download('punkt')
@@ -53,6 +53,10 @@ def sendMail(path_to_results_file, recipients):
     
     print('Message sent to Mail')
     return 
+
+def calculate_cost(tokens):
+    return round(tokens/1000, 2) * 0.02
+
 
 st.set_page_config(layout="wide")
 
@@ -134,6 +138,8 @@ if st.button("Générer") and file_input:
         rt = ts.reading_time(response)
         rt = ceil(rt / 60) if rt > 60 else ceil(rt)
         
+        tokens = len(nltk.tokenize.word_tokenize(response))
+        
         file.loc[row.Index, 'Résultat'] = response 
         with open("result.txt", "a", encoding='utf-8') as f:
             f.write(f"""
@@ -144,14 +150,12 @@ Sujet : {sujet}
 Flesch : {flesch}
 Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari})
 Reading time : environ {rt} {"secondes" if rt < 60 else "minutes"}
-Nombre de mots : {len(response.split())}, Nombre de tokens : {len(nltk.tokenize.word_tokenize(response))}
+Nombre de mots : {len(response.split())}, Nombre de tokens : {tokens} ({calculate_cost(tokens)}$)
 ---
 {response}
 ---
             """)
     
-#   Nombre de tokens : {len(word_tokenize(response))}, Nombre de mots : {len(response.split())}
-
     with st.sidebar: 
         st.success("Résultats disponibles")
         with open("result.txt", "r", encoding='utf-8') as f:
