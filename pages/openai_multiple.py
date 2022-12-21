@@ -16,6 +16,7 @@ import textstat as ts
 from math import ceil 
 
 # load_dotenv()
+nltk.download('punkt')
 
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
