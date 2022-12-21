@@ -11,7 +11,7 @@ import smtplib
 from io import BytesIO
 from xlsxwriter import Workbook
 # from bert_score import score 
-from nltk.tokenize import word_tokenize
+import nltk
 import textstat as ts
 from math import ceil 
 
@@ -143,7 +143,7 @@ Sujet : {sujet}
 Flesch : {flesch}
 Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari})
 Reading time : environ {rt} {"secondes" if rt < 60 else "minutes"}
-Nombre de mots : {len(response.split())}, Nombre de tokens : {len(word_tokenize(response))}
+Nombre de mots : {len(response.split())}, Nombre de tokens : {len(nltk.tokenize.word_tokenize(response))}
 ---
 {response}
 ---
