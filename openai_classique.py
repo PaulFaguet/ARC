@@ -67,7 +67,6 @@ if st.button('Générer le texte'):
         temperature= temperature,
         max_tokens= 1000
     )
-    # create a separated line
     st.write('---')
     st.write(response['choices'][0]['text'])
 

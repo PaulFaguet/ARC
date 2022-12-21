@@ -21,85 +21,84 @@ def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_json(orient='records', indent=4, force_ascii=False)
 
-# def sendMail(path_to_results_file, recipients):
+def sendMail(path_to_results_file, recipients):
     
-#     recipients = recipients.split(',')
-#     # smtp_axess = os.getenv('TNR_SMTP_AXESS')
-#     # user_axess = os.getenv('TNR_USER_AXESS')
-#     # port = os.getenv('TNR_PORT_MAIL')
+    recipients = recipients.split(',')
+    smtp_axess = os.getenv('TNR_SMTP_AXESS')
+    user_axess = os.getenv('TNR_USER_AXESS')
+    port = os.getenv('TNR_PORT_MAIL')
     
-#     smtp_axess = st.secrets["TNR_SMTP_AXESS"]
-#     user_axess = st.secrets["TNR_USER_AXESS"]
-#     port = st.secrets["TNR_PORT_MAIL"]
+    # smtp_axess = st.secrets["TNR_SMTP_AXESS"]
+    # user_axess = st.secrets["TNR_USER_AXESS"]
+    # port = st.secrets["TNR_PORT_MAIL"]
     
     
-#     msg = MIMEMultipart()
-#     msg['Subject'] = f"Génération de textes avec OpenAI"
-#     msg['From'] = user_axess
-#     msg['To'] = ','.join(recipients)
+    msg = MIMEMultipart()
+    msg['Subject'] = f"Génération de textes avec OpenAI"
+    msg['From'] = user_axess
+    msg['To'] = ','.join(recipients)
 
-#     msg.attach(MIMEText('Ci-joint les résultats de la génération de textes avec OpenAI.', 'plain'))
+    msg.attach(MIMEText('Ci-joint les résultats de la génération de textes avec OpenAI.', 'plain'))
     
     
-#     part_one = MIMEBase('application', "octet-stream")
-#     part_one.set_payload((open(path_to_results_file, "rb")).read())
-#     encoders.encode_base64(part_one)
-#     part_one.add_header('Content-Disposition', f'attachment; filename="resultat.xlsx"')
-#     msg.attach(part_one)
+    part_one = MIMEBase('application', "octet-stream")
+    part_one.set_payload((open(path_to_results_file, "rb")).read())
+    encoders.encode_base64(part_one)
+    part_one.add_header('Content-Disposition', f'attachment; filename="resultat.xlsx"')
+    msg.attach(part_one)
     
-#     with smtplib.SMTP(smtp_axess, port) as smtp:
-#         smtp.sendmail(user_axess, recipients, msg.as_string())
+    with smtplib.SMTP(smtp_axess, port) as smtp:
+        smtp.sendmail(user_axess, recipients, msg.as_string())
     
-#     print('Message sent to Mail')
-#     return 
+    print('Message sent to Mail')
+    return 
 
 st.set_page_config(layout="wide")
 
 st.title("OPEN AI")
 
 
-output = BytesIO()
-wb = Workbook(output, {'in_memory': True})
-ws = wb.add_worksheet()
+# output = BytesIO()
+# wb = Workbook(output, {'in_memory': True})
+# ws = wb.add_worksheet()
 
-with wb:
-    ws.write('A1', 'Article ID')
-    ws.write('B1', 'Client')
-    ws.write('C1', 'Type de page')
-    ws.write('D1', 'Sujet')
-    ws.write('E1', 'Consignes')
-    ws.write('F1', 'Nombre de mots')
-    ws.write('G1', 'Structure')
-    ws.write('H1', 'Mots clés primaires')
-    ws.write('I1', 'Mots clés secondaires')
-    ws.write('J1', 'Meta titre')
-    ws.write('K1', 'Meta description')
-    ws.write('L1', 'Texte')
-    ws.write('M1', 'Résultat')
+# with wb:
+#     ws.write('A1', 'Article ID')
+#     ws.write('B1', 'Client')
+#     ws.write('C1', 'Type de page')
+#     ws.write('D1', 'Sujet')
+#     ws.write('E1', 'Consignes')
+#     ws.write('F1', 'Nombre de mots')
+#     ws.write('G1', 'Structure')
+#     ws.write('H1', 'Mots clés primaires')
+#     ws.write('I1', 'Mots clés secondaires')
+#     ws.write('J1', 'Meta titre')
+#     ws.write('K1', 'Meta description')
+#     ws.write('L1', 'Texte')
+#     ws.write('M1', 'Résultat')
 
 with st.sidebar:     
-    st.header("Télécharger le fichier Excel à remplir")   
-    st.download_button(
-            label="Télécharger exemple.xlsx",
-            data=output.getvalue(),
-            file_name='exemple.xlsx',
-            mime='application/vnd.ms-excel',
-    )
+    st.info("Le bouton de téléchargement s'affichera ici dès que les résultats seront prêts")
+    # st.download_button(
+    #         label="Télécharger exemple.xlsx",
+    #         data=output.getvalue(),
+    #         file_name='exemple.xlsx',
+    #         mime='application/vnd.ms-excel',
+    # )
 
 
 
 
 file_input = st.file_uploader("Importer un fichier XLSX", type="xlsx")
 
-if file_input:
-    st.success("File uploaded")
+if st.button("Générer") and file_input:
     file = pd.read_excel(file_input)
-    st.table(file)
-    
+    st.write(file[["Article ID", "Client", "Type de page", "Sujet", "Consignes", "Nombre de mots", "Structure", "Mots clés primaires", "Mots clés secondaires"]])
     file.columns = file.columns.str.replace(' ', '_')
 
     with open("result.txt", "w", encoding='utf-8') as f:
         f.write('')
+        
     for row in file.itertuples():
         sujet = row.Sujet
         type = row.Type_de_page 
@@ -144,7 +143,7 @@ Sujet : {sujet}
 Flesch : {flesch}
 Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari})
 Reading time : environ {rt} {"secondes" if rt < 60 else "minutes"}
-Nombre de mots : {len(response.split())}
+Nombre de mots : {len(response.split())}, Nombre de tokens : {len(word_tokenize(response))}
 ---
 {response}
 ---
@@ -152,12 +151,13 @@ Nombre de mots : {len(response.split())}
     
 #   Nombre de tokens : {len(word_tokenize(response))}, Nombre de mots : {len(response.split())}
 
-    with open("result.txt", "r", encoding='utf-8') as f:
-        resp = f.read()
-        st.download_button(
-            label="Télécharger les résultats (.txt)",
-            data=resp,
-            file_name='result.txt',
-            mime='text/plain',
-        )
-        
+    with st.sidebar: 
+        st.success("Résultats disponibles")
+        with open("result.txt", "r", encoding='utf-8') as f:
+            resp = f.read()
+            st.download_button(
+                label="Télécharger les résultats (.txt)",
+                data=resp,
+                file_name='result.txt',
+                mime='text/plain',
+            )
