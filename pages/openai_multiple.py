@@ -85,7 +85,7 @@ with st.sidebar:
     st.download_button(
             label="Télécharger exemple.xlsx",
             data=output.getvalue(),
-            file_name='openai_template.xlsx',
+            file_name='exemple.xlsx',
             mime='application/vnd.ms-excel',
     )
     st.info("Le bouton de téléchargement s'affichera ici dès que les résultats seront prêts")
