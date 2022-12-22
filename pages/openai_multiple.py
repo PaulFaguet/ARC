@@ -16,7 +16,7 @@ import textstat as ts
 from math import ceil
 
 # load_dotenv()
-# nltk.download('punkt')
+nltk.download('punkt')
 
 def convert_df(df):
     return df.to_json(orient='records', indent=4, force_ascii=False)
