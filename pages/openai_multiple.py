@@ -16,7 +16,7 @@ import textstat as ts
 from math import ceil
 
 # load_dotenv()
-nltk.download('punkt')
+# nltk.download('punkt')
 
 def convert_df(df):
     return df.to_json(orient='records', indent=4, force_ascii=False)
@@ -62,33 +62,34 @@ st.set_page_config(layout="wide")
 st.title("OPEN AI")
 
 
-output = BytesIO()
-wb = Workbook(output, {'in_memory': True})
-ws = wb.add_worksheet()
+# output = BytesIO()
+# wb = Workbook(output, {'in_memory': True})
+# ws = wb.add_worksheet()
 
-with wb:
-    ws.write('A1', 'Article ID')
-    ws.write('B1', 'Client')
-    ws.write('C1', 'Type de page')
-    ws.write('D1', 'Sujet')
-    ws.write('E1', 'Consignes')
-    ws.write('F1', 'Nombre de mots')
-    ws.write('G1', 'Structure')
-    ws.write('H1', 'Mots clés primaires')
-    ws.write('I1', 'Mots clés secondaires')
-    ws.write('J1', 'Meta titre')
-    ws.write('K1', 'Meta description')
-    ws.write('L1', 'Texte')
-    ws.write('M1', 'Résultat')
+# with wb:
+#     ws.write('A1', 'Article ID')
+#     ws.write('B1', 'Client')
+#     ws.write('C1', 'Type de page')
+#     ws.write('D1', 'Sujet')
+#     ws.write('E1', 'Consignes')
+#     ws.write('F1', 'Nombre de mots')
+#     ws.write('G1', 'Structure')
+#     ws.write('H1', 'Mots clés primaires')
+#     ws.write('I1', 'Mots clés secondaires')
+#     ws.write('J1', 'Meta titre')
+#     ws.write('K1', 'Meta description')
+#     ws.write('L1', 'Texte')
+#     ws.write('M1', 'Résultat')
 
 with st.sidebar:     
-    st.download_button(
-            label="Télécharger exemple.xlsx",
-            data=output.getvalue(),
-            file_name='exemple.xlsx',
-            mime='application/vnd.ms-excel',
-    )
     st.info("Le bouton de téléchargement s'affichera ici dès que les résultats seront prêts")
+    # st.download_button(
+    #         label="Télécharger exemple.xlsx",
+    #         data=output.getvalue(),
+    #         file_name='exemple.xlsx',
+    #         mime='application/vnd.ms-excel',
+    # )
+    
 
 
 
