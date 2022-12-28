@@ -10,7 +10,7 @@ from email import encoders
 import smtplib
 from io import BytesIO
 from xlsxwriter import Workbook
-# from bert_score import score 
+from bert_score import score 
 import nltk
 import textstat as ts
 from math import ceil
@@ -104,7 +104,7 @@ if st.button("Générer") and file_input:
 
     with open("result.txt", "w", encoding='utf-8') as f:
         f.write('')
-        
+    col_info1, col_info2 = st.columns([4, 1])
     for row in file.itertuples():
         sujet = row.Sujet
         type = row.Type_de_page 
@@ -115,14 +115,18 @@ if st.button("Générer") and file_input:
         keyword_seconds = row.Mots_clés_secondaires
         nombre_mots = row.Nombre_de_mots
         structure = structure.replace('</h2>', '</h2>\n').replace('</h1>', '</h1>\n')
-        
+        # show me the progress using percents
+        with col_info1:
+            st.info(f"Rédaction en cours pour {client} :  {sujet} ({type})")
+        with col_info2:
+            st.info(f"{row.Article_ID/len(file)*100:.2f}%")
         prompt = f"Rédige un texte d'environ {nombre_mots} mots {consigne} sur la thématique de {sujet}. Respecte la structure suivante : {structure}. Intègre les mots-clés suivants dans votre texte : {keywords}. Veillez à ce que votre texte soit bien structuré et facile à lire, tout en respectant les consignes fournies et en intégrant chaque mot-clé au moins une fois."
         
         response = openai.Completion.create(
         engine = 'text-davinci-003',
         prompt = prompt,
         temperature= 0.5,
-        max_tokens= 1000
+        max_tokens= 2000
         )
                 
         response = response['choices'][0]['text'].split("\n")
@@ -136,26 +140,61 @@ if st.button("Générer") and file_input:
         fk = ts.flesch_kincaid_grade(response)
         ari = ts.automated_readability_index(response)
         grade_moyen = round((dc + fk + ari) / 3, 2)
+        bp, br, bf = score([response], [sujet], lang='fr')
         rt = ts.reading_time(response)
         rt = ceil(rt / 60) if rt > 60 else ceil(rt)
         
         tokens = len(nltk.tokenize.word_tokenize(response))
         
-        file.loc[row.Index, 'Résultat'] = response 
+        # file.loc[row.Index, 'Résultat'] = response 
+        essai = 0
+        while flesch < 70: #& bf[0] < 0.5:
+            response = openai.Completion.create(
+            engine = 'text-davinci-003',
+            prompt = prompt,
+            temperature= 0.5,
+            max_tokens= 1000
+            )
+                    
+            response = response['choices'][0]['text'].split("\n")
+            response = [line for line in response if line != '']
+            response = '\n'.join(response)
+            response = response.replace('"', '"""')
+            
+            ts.set_lang("fr")
+            flesch = ts.flesch_reading_ease(response)
+            dc = ts.dale_chall_readability_score(response)
+            fk = ts.flesch_kincaid_grade(response)
+            ari = ts.automated_readability_index(response)
+            grade_moyen = round((dc + fk + ari) / 3, 2)
+            bp, br, bf = score([response], [sujet], lang='fr')
+            rt = ts.reading_time(response)
+            rt = ceil(rt / 60) if rt > 60 else ceil(rt)
+            
+            tokens = len(nltk.tokenize.word_tokenize(response))
+            if essai == 10:
+                break
+            else:
+                essai += 1
+            
         with open("result.txt", "a", encoding='utf-8') as f:
-            f.write(f"""
+                f.write(f"""
 Requête n°{row.Index+1}
 Client : {client}
 Sujet : {sujet}
+Essai : {essai}
 --- 
 Flesch : {flesch}
-Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari})
+(Grade moyen : {grade_moyen} (Dale Chall {dc}, Flesch Kincaid {fk}, Automated Readability Index {ari}))
+BERT Score : {bf[0]} (Precision : {bp[0]}, Recall : {br[0]})
 Reading time : environ {rt} {"secondes" if rt < 60 else "minutes"}
 Nombre de mots : {len(response.split())}, Nombre de tokens : {tokens}
 ---
 {response}
 ---
-            """)
+                """)
+        
+            
     
     with st.sidebar: 
         st.success("Résultats disponibles")
@@ -164,6 +203,7 @@ Nombre de mots : {len(response.split())}, Nombre de tokens : {tokens}
             st.download_button(
                 label="Télécharger les résultats (.txt)",
                 data=resp,
-                file_name='result.txt',
-                mime='text/plain',
+                file_name='result.doc',
+                # mime='text/plain',
+                mime="application/msword"
             )
