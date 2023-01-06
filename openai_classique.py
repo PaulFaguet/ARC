@@ -49,7 +49,7 @@ df_examples = pd.DataFrame(
         ['Générer une étude mots-clés', 'Génère une étude mots-clés sur [sujet]'],
         ['[A TESTER] Améliorer la précision, la qualité et la longueur des réponses', 'Lets think step by step'],
     ], 
-    index=['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    index=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 )
 
 with st.sidebar:
