@@ -45,6 +45,9 @@ df_examples = pd.DataFrame(
         # ['Traducteur', 'Traduit ce texte en 1. anglais, 2. espagnol, et 3. portugais : [entrer un texte]'],
         ['Résumé de texte', 'Résume ce texte : [entrer un texte]'],
         ['Utilisation d\'un pronom différent', 'Ecrit un texte à propos des caves à vins en utilisant le pronom "je"'],
+        ['Classer des mots-clés en différentes catégories', 'Classer les mots-clés suivants en 3 catégories : cave, vin, température, humidité, Ma Cave à Vin, blog, passion, etc.'],
+        ['Générer une étude mots-clés', 'Génère une étude mots-clés sur [sujet]'],
+        ['[A TESTER] Améliorer la précision, la qualité et la longueur des réponses', 'Lets think step by step'],
     ], 
     index=['1', '2', '3', '4', '5', '6', '7', '8', '9']
 )
