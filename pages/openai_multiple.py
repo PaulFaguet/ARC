@@ -24,13 +24,13 @@ def convert_df(df):
 def sendMail(path_to_results_file, recipients):
     
     recipients = recipients.split(',')
-    smtp_axess = os.getenv('TNR_SMTP_AXESS')
-    user_axess = os.getenv('TNR_USER_AXESS')
-    port = os.getenv('TNR_PORT_MAIL')
+    # smtp_axess = os.getenv('TNR_SMTP_AXESS')
+    # user_axess = os.getenv('TNR_USER_AXESS')
+    # port = os.getenv('TNR_PORT_MAIL')
     
-    # smtp_axess = st.secrets["TNR_SMTP_AXESS"]
-    # user_axess = st.secrets["TNR_USER_AXESS"]
-    # port = st.secrets["TNR_PORT_MAIL"]
+    smtp_axess = st.secrets["TNR_SMTP_AXESS"]
+    user_axess = st.secrets["TNR_USER_AXESS"]
+    port = st.secrets["TNR_PORT_MAIL"]
     
     
     msg = MIMEMultipart()
