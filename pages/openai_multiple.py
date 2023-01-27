@@ -132,7 +132,6 @@ with wb:
     ws.write('L1', 'Texte')
     ws.write('M1', 'Résultat')
 
-st.info("Téléchargez le fichier Template_OpenAI.xlsx ci-dessous, remplissez-le et importez-le dans l'application")
 button_col1, button_col2, button_col3 = st.columns([1, 1, 1])
 with button_col2:
     st.download_button(
@@ -141,8 +140,7 @@ with button_col2:
             file_name='Template_OpenAI.xlsx',
             mime='application/vnd.ms-excel',
     )
-
-st.markdown("---")
+st.info("Téléchargez le fichier Template_OpenAI.xlsx ci-dessus, remplissez-le et importez-le dans l'application ci-dessous")
 
 with st.sidebar:     
     st.info("Le bouton de téléchargement s'affichera ici dès que les résultats seront prêts")
