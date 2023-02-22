@@ -14,7 +14,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # PROD
 # openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-st.title('OPEN AI')
+st.title('Assistance à la Rédaction de Contenu - Classique')
 
 col1, col2 = st.columns(2)
 sub_col1, sub_col2 = st.columns(2)
@@ -23,7 +23,7 @@ with col1:
     language = st.multiselect("Choisissez une ou plusieurs langue(s) :", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'], help="Choisissez une ou plusieurs langues, la traduction est gérée directement selon les langages choisis.")
 
 with col2:
-    algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes https://beta.openai.com/docs/models/gpt-3")
+    algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive, Babbage est utile pour l'analyse de données et le traitement, Ada est utile pour l'automatisation de tâches complexes https://beta.openai.com/docs/models/gpt-3")
 
 with sub_col1:
     words_number = st.slider("Choisissez le nombre de mots (tokens) à générer :", 50, 2000, (250, 750), 50, help="Un token correspond plus ou moins à une syllabe. 'Chat' = 1 token, 'Montagne' = 3 tokens, 'Sarkozy' = 4 tokens car mot peu commun.")
@@ -79,7 +79,7 @@ with st.sidebar:
     st.write("Ces exemples de prompts sont issus des sites suivants : %s" % ", ".join(["https://beta.openai.com/examples", "https://www.webrankinfo.com/dossiers/conseils/chatgpt-seo", "https://learnprompting.org/docs/intro", "https://flowgpt.com/"]))
     st.table(df_examples)
 
-st.write("Voici la page des exemples d'utilisation de l'API de OpenAI : https://beta.openai.com/examples")
+# st.write("Voici la page des exemples d'utilisation de l'API de OpenAI : https://beta.openai.com/examples")
 inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Brainstorm des idées de contenu en rapport avec le [SUJET]', # Brainstorm
      'Crée une liste de question fréquemment posées en rapport avec le [SUJET]', # Questions/FAQ
@@ -119,7 +119,7 @@ input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :", value=inputs
 
 
 
-text = f"{input}. Rédige un texte entre {words_number[0]} et {words_number[1]} mots. Traduction en {', '.join(language)}."
+text = f"{input}. Tu es un rédacteur dans une agence de référencement web qui rédige des textes pour soigner le SEO. Le texte se doit d'être intelligible et de respecter les consignes fournies ci-dessus. Le texte doit être entre {words_number[0]} et {words_number[1]} mots. Traduction en {', '.join(language)}."
 if st.button('Générer le texte'):
     response = openai.Completion.create(
         engine = algo,
