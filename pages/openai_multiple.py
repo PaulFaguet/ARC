@@ -10,6 +10,7 @@ import openai
 import re
 import streamlit as st
 import textstat as ts
+import math
 
 from bert_score import score
 from email import encoders
@@ -223,8 +224,8 @@ etc.
     ws.write('E1', 'Consignes')
     ws.write('E2', """
 Obligatoire \n
-"Utiliser le vouvoiement", 
-"Utiliser un discours familier", 
+"Utiliser le vouvoiement et un discourd professionnel", 
+"Utiliser un discours familier, simple et direct", 
 "Utiliser des termes simples avec des phrases courtes", 
 etc.
              """)
@@ -232,9 +233,9 @@ etc.
     ws.write('F1', 'Nombre de mots')
     ws.write('F2', """
 Obligatoire \n
-"Entre 500 et 1000", 
+"500 et 1000", 
 "500", 
-"653",
+"650 et 750",
 etc.
              """)
     
@@ -314,7 +315,7 @@ if st.button("Générer") and file_input:
     with open("result.txt", "w", encoding='utf-8') as f:
         f.write('')
         
-    # file = pd.read_excel('Template_OpenAI 2 (1).xlsx')
+    # file = pd.read_excel('Adcom - Brief création textes pages catégories.xlsx')
    
     col_info1, col_info2 = st.columns([4, 1])
     for row in file.itertuples():
@@ -341,14 +342,20 @@ if st.button("Générer") and file_input:
                 secondary_keywords = secondary_keywords[0].split(', ')
         else:
             secondary_keywords = []
-   
+        
+        if 'et' in nombre_mots:
+            nombre_mots_avg_1, nombre_mots_avg_2 = int(nombre_mots.split(' et ')[0]), int(nombre_mots.split(' et ')[1])
+            nombre_mots_avg = math.ceil(np.mean([nombre_mots_avg_1, nombre_mots_avg_2]))
+        else:
+            nombre_mots_avg = int(nombre_mots)
+        
         with col_info1:
             st.info(f"Rédaction en cours pour {client} :  {sujet} ({type})")
         with col_info2:
             st.success(f"{row.Article_ID/len(file)*100:.2f}%")
             
         prompt = f"""
-        Contexte : Tu es un expert SEO depuis 20 ans. Tu rédiges des textes pour optimiser le SEO de sites internet. 
+        Tu es un expert SEO depuis 20 ans. Tu rédiges des textes pour optimiser le SEO de sites internet. 
 
         Le texte se doit d'être intelligible et de respecter scrupuleusement les consignes fournies ci-dessous.
         Rédige un texte entre {nombre_mots} mots pour {type} sur le sujet suivant : {sujet}.
@@ -370,7 +377,7 @@ if st.button("Générer") and file_input:
         
         # on relance si : flesch < 50 ou bert F1 < 0.5 ou densité d'un kw primaire > 5 ou écart de 15% entre le nombre de mots demandé et le nombre de mots du texte généré
         essai = 0
-        while scores['flesch'] < 50 or scores['bert_f1'] < 0.5 or any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]) or abs(len(response.split()) - nombre_mots) > nombre_mots * 0.15:
+        while scores['flesch'] < 50 or scores['bert_f1'] < 0.5 or any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]) or abs(len(response.split()) - nombre_mots_avg) > nombre_mots_avg * 0.15:
             response = formateResponse(prompt)     
             scores = getScores(response, sujet)
             
