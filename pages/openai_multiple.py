@@ -192,7 +192,7 @@ Obligatoire \n
 1
             """)
     
-    ws.write('B1', 'Nom du Client')
+    ws.write('B1', 'Client')
     ws.write('B2', """
 Obligatoire \n
 Nom du client : 
@@ -315,7 +315,8 @@ if st.button("Générer") and file_input:
     with open("result.txt", "w", encoding='utf-8') as f:
         f.write('')
         
-    # file = pd.read_excel('Adcom - Brief création textes pages catégories.xlsx')
+    # file = pd.read_excel('OpenAI - SIR ARLES.xlsx')
+    
    
     col_info1, col_info2 = st.columns([4, 1])
     for row in file.itertuples():
