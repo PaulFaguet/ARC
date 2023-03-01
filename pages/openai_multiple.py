@@ -189,8 +189,7 @@ with wb:
     ws.write('A1', 'Article ID')
     ws.write('A2', """
 Obligatoire \n 
-1
-            """)
+1""")
     
     ws.write('B1', 'Client')
     ws.write('B2', """
@@ -199,8 +198,7 @@ Nom du client :
 "Ma Cave à Vin", 
 "Aixam", 
 "Vicat",
-etc.
-             """)
+etc.""")
     
     ws.write('C1', 'Type de page')
     ws.write('C2', """
@@ -209,8 +207,7 @@ Obligatoire \n
 "Article de blog", 
 "Newsletter", 
 "Page produit", 
-etc.
-             """)
+etc.""")
     
     ws.write('D1', 'Sujet')
     ws.write('D2', """
@@ -218,8 +215,7 @@ Obligatoire \n
 "Cave à vin de vieillissement", 
 "Voiture sans permis", 
 "Béton de chanvre", 
-etc.
-             """)
+etc.""")
     
     ws.write('E1', 'Consignes')
     ws.write('E2', """
@@ -227,8 +223,7 @@ Obligatoire \n
 "Utiliser le vouvoiement et un discourd professionnel", 
 "Utiliser un discours familier, simple et direct", 
 "Utiliser des termes simples avec des phrases courtes", 
-etc.
-             """)
+etc.""")
     
     ws.write('F1', 'Nombre de mots')
     ws.write('F2', """
@@ -236,8 +231,7 @@ Obligatoire \n
 "500 et 1000", 
 "500", 
 "650 et 750",
-etc.
-             """)
+etc.""")
     
     ws.write('G1', 'Structure')
     ws.write('G2', """
@@ -255,8 +249,7 @@ Obligatoire \n
 <h2>Quelle température pour une [CAVE] ?</h2>
 <h2>Où installer sa [CAVE] ?</h2>",
 
-etc.
-             """)
+etc.""")
     
     ws.write('H1', 'Mots clés primaires')
     ws.write('H2', """
@@ -267,8 +260,7 @@ Obligatoire \n
  
 "Béton de chanvre", 
 
-etc.
-             """)
+etc.""")
     
     ws.write('I1', 'Mots clés secondaires')
     ws.write('I2', """
@@ -279,8 +271,7 @@ Facultative \n
 
 "Louis Vicat",
 
-etc.
-             """)
+etc.""")
     
     ws.write('J1', 'Meta titre')
     ws.write('J2', """Facultative""")
