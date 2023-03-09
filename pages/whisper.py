@@ -9,12 +9,10 @@ st.set_page_config(layout="wide")
 
 st.title('Transcription Audio → Texte')
 
-# path = r'C:\Users\PFA\OneDrive - Axess OnLine\Bureau\open_ai\test-courchevel.mp3'
-url = 'Interview contenu Megève-20230301_090229-Enregistrement de la réunion.mp4'
 
 audio_input = st.file_uploader(
     label="Importer un ou plusieurs fichiers audio", 
-    help="Fichiers limités à 25MB avec les type  mp3 ou mp4.", 
+    help="Fichiers limités à 25MB avec les types mp3 ou mp4.", 
     accept_multiple_files=True, 
     type=['mp3', 'mp4']
 )
