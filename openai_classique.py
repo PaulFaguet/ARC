@@ -9,10 +9,10 @@ st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout=
 # load_dotenv()
 
 # DEV
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # PROD
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
@@ -63,7 +63,7 @@ df_examples = pd.DataFrame(
         ['Générer une description de fiche produit', 'Fais une description d\'une cave à vin de vieillissement qui sera publiée sur une fiche produit d\'un site ecommerce. En incluant un sous-titre pour chaque partie, détaille les caractéristiques, explique à qui il est destiné, à quoi il sert, comment on l\'installe, comment on l\'utilise, combien de temps il peut servir, pourquoi ce produit et pas un autre, etc.'],
         ['Générer une nouvelle version d\'un texte', 'Fais une nouvelle version de ce texte : [texte]'],
         ['Générer un glossaire/lexique', 'Fais un glossaire des termes de la thématiques des caves à vin de vieillissement. Présente osus la forme de liste avec chaque définition en une seule phrase'],
-        ['Reformuler un texte qui contient des phrases longues', 'Reformle ce texte avec des phrases courtes et faciles à lire'],
+        ['Reformuler un texte qui contient des phrases longues', 'Reformule ce texte avec des phrases courtes et faciles à lire'],
         ['Reformuler un texte en changeant le ton', 'Reformule ce texte dans un style romantique, avec un mélange des registres comiques et tragiques, hyperbole et antithèse'],
         ['Améliorer un texte en rajoutant des expressions de transition', 'Reformule le texte pour inciter le lecteur à lire jusqu\'au bout. Ajoute des transition entre les différentes parties.'],
         # ['Reformuler un texte en modifiant les répétitions', 'Reformule ce texte en retirant les répétitions, en utilisant davantage de synonymes'],
@@ -112,6 +112,7 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Corrige les fautes d\'orthographe, de grammaire, de syntaxe et de ponctuation dans le texte suivant : [TEXTE]', # Syntaxe
      'Génère une expression régulère qui permet de [CONSIGNE]', # Regex
     ]
+
 inputs_df = pd.DataFrame({'Consigne': df_examples['Utilisation'].values.tolist(), 'Input': inputs})
 input_selector = st.selectbox("Choisissez un exemple", inputs_df['Consigne'].values.tolist())
 
