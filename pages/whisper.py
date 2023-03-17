@@ -2,7 +2,7 @@ import openai
 import streamlit as st
 import os
 import nltk
-from moviepy.editor import *
+# from moviepy.editor import *
 from dotenv import load_dotenv
 
 load_dotenv()
