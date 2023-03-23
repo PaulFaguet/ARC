@@ -366,7 +366,7 @@ if st.button("Générer") and file_input:
         keywords_density_and_occurences = calculateKeywordsDensityAndOccurrences(keywords_dict, response)
         keywords_density_and_occurences = sortKeywordsDict(keywords_density_and_occurences)
         
-        # on relance si : flesch < 50 ou bert F1 < 0.5 ou densité d'un kw primaire > 5 ou écart de 15% entre le nombre de mots demandé et le nombre de mots du texte généré
+        # on relance si : flesch < 50 ou bert F1 < 0.4 ou densité d'un kw primaire > 5 ou écart de 15% entre le nombre de mots demandé et le nombre de mots du texte généré
         essai = 0
         while scores['flesch'] < 50 or scores['bert_f1'] < 0.4 or any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]) or abs(len(response.split()) - nombre_mots_avg) > nombre_mots_avg * 0.15:
             response = formateResponse(prompt)     

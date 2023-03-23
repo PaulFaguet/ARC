@@ -9,10 +9,10 @@ st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout=
 # load_dotenv()
 
 # DEV
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # PROD
-# openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
@@ -121,11 +121,14 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
 # add the inputs df to the examples df as the col 'Input'
 df_examples['Input'] = inputs
 
-action_selector = st.multiselect("Choisissez une ou plusieurs actions", df_examples['Type'].unique(), ['Mots-clés', 'Syntaxe'])
-
+inp_col1, inp_col2 = st.columns(2)
+with inp_col1:
+        action_selector = st.multiselect("Choisissez une ou plusieurs actions", df_examples['Type'].unique(), ['Mots-clés', 'Syntaxe'])
 
 inputs_df = pd.DataFrame({'Consigne': df_examples['Utilisation'].values.tolist(), 'Input': inputs, 'Type': df_examples['Type'].values.tolist()})
-input_selector = st.selectbox("Choisissez un input pré-rempli", inputs_df[inputs_df['Type'].isin(action_selector)])
+
+with inp_col2:
+    input_selector = st.selectbox("Choisissez un input pré-rempli", inputs_df[inputs_df['Type'].isin(action_selector)])
 
 input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :", value=inputs_df[inputs_df['Consigne'] == input_selector]['Input'].values[0] if input_selector else "")
 
