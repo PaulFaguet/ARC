@@ -227,9 +227,9 @@ etc.""")
     ws.write('F1', 'Nombre de mots')
     ws.write('F2', """
 Obligatoire \n
-"500 et 1000", 
+"1000", 
 "500", 
-"650 et 750",
+"750",
 etc.""")
     
     ws.write('G1', 'Structure')
@@ -305,7 +305,7 @@ if st.button("Générer") and file_input:
     with open("result.txt", "w", encoding='utf-8') as f:
         f.write('')
         
-    # file = pd.read_excel('OpenAI - SIR ARLES.xlsx')
+    # file = pd.read_excel('Template_OpenAI-QdO-textes-categories.xlsx')
     
    
     col_info1, col_info2 = st.columns([4, 1])
@@ -334,11 +334,11 @@ if st.button("Générer") and file_input:
         else:
             secondary_keywords = []
         
-        if 'et' in nombre_mots:
-            nombre_mots_avg_1, nombre_mots_avg_2 = int(nombre_mots.split(' et ')[0]), int(nombre_mots.split(' et ')[1])
-            nombre_mots_avg = math.ceil(np.mean([nombre_mots_avg_1, nombre_mots_avg_2]))
-        else:
-            nombre_mots_avg = int(nombre_mots)
+        # if 'et' in nombre_mots:
+        #     nombre_mots_avg_1, nombre_mots_avg_2 = int(nombre_mots.split(' et ')[0]), int(nombre_mots.split(' et ')[1])
+        #     nombre_mots_avg = math.ceil(np.mean([nombre_mots_avg_1, nombre_mots_avg_2]))
+        # else:
+        nombre_mots_avg = int(nombre_mots)
         
         with col_info1:
             st.info(f"Rédaction en cours pour {client} :  {sujet} ({type})")
@@ -349,7 +349,7 @@ if st.button("Générer") and file_input:
         Tu es un expert SEO depuis 20 ans. Tu rédiges des textes pour optimiser le SEO de sites internet. 
 
         Le texte se doit d'être intelligible et de respecter scrupuleusement les consignes fournies ci-dessous.
-        Rédige un texte entre {nombre_mots} mots pour {type} sur le sujet suivant : {sujet}.
+        Rédige un texte de {nombre_mots} mots pour {type} sur le sujet suivant : {sujet}.
         Respecte les consignes de rédaction suivante : {consigne}. 
         Respecte absolument la structure suivante : {structure}. 
         Intègre les mots-clés principaux suivants au moins une fois dans le texte : {keywords}. 
@@ -368,7 +368,7 @@ if st.button("Générer") and file_input:
         
         # on relance si : flesch < 50 ou bert F1 < 0.5 ou densité d'un kw primaire > 5 ou écart de 15% entre le nombre de mots demandé et le nombre de mots du texte généré
         essai = 0
-        while scores['flesch'] < 50 or scores['bert_f1'] < 0.5 or any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]) or abs(len(response.split()) - nombre_mots_avg) > nombre_mots_avg * 0.15:
+        while scores['flesch'] < 50 or scores['bert_f1'] < 0.4 or any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]) or abs(len(response.split()) - nombre_mots_avg) > nombre_mots_avg * 0.15:
             response = formateResponse(prompt)     
             scores = getScores(response, sujet)
             

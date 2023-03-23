@@ -9,10 +9,10 @@ st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout=
 # load_dotenv()
 
 # DEV
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # PROD
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
