@@ -69,8 +69,9 @@ df_examples = pd.DataFrame(
         ['Générer une expression régulière (REGEX)', 'Génère la regex correspondant [consigne de la regex]', 'Autres'],
         ['Développer un sujet', 'Développe le sujet suivant : [sujet]', 'Génération d\'idées'],
         ['Générer une stratégie SEO', 'Donne une stratégie SEO pour le site [site]', 'Autres'],
+        ['Générer des personas', 'Donne 3 personas pour le site [site]', 'Autres'],
     ], 
-    index=[[i for i in range(1, 36)]]
+    index=[[i for i in range(1, 37)]]
 )
 
 
@@ -114,7 +115,8 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Corrige les fautes d\'orthographe, de grammaire, de syntaxe et de ponctuation dans le texte suivant : [TEXTE]', # Syntaxe
      'Génère une expression régulère qui permet de [CONSIGNE]', # Regex
      'Développe le sujet suivant : [SUJET]', # Brainstorm
-     'Prépare moi une stratégie SEO pour le site web [URL]. Ce site web est [DETAILS DU SITE]. Explique moi les points sur lesquels nous devrions mettre l’accent, ce que nous devrions faire pour avoir un SEO performant et ainsi toucher un maximum de prospects lorsqu’ils recherchent sur Google.'
+     'Prépare moi une stratégie SEO pour le site web [URL]. Ce site web est [DETAILS DU SITE]. Explique moi les points sur lesquels nous devrions mettre l’accent, ce que nous devrions faire pour avoir un SEO performant et ainsi toucher un maximum de prospects lorsqu’ils recherchent sur Google.', # SEO
+     'Génère une liste de personas pour [SITE] ? Le but est d’avoir quelques profils et leurs caractéristiques, leurs attentes, leurs freins, afin de pouvoir les cibler plus précisément et leur apporter les réponses qu’ils attentes dans le style de contenu qu’ils préférent.'
     ]
 
 # add the inputs df to the examples df as the col 'Input'
