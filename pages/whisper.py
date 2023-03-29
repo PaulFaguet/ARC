@@ -23,21 +23,54 @@ audio_input = st.file_uploader(
     type=['mp3']
 )
 
-# st.success("Type du fichier : %s" % audio_input[0].type)
+formate_checkbox = st.checkbox("Formater le texte sous forme de dialogue", value=False)
+
 if audio_input is not None and st.button('Transcrire'): 
     i = 1
     
     for audio_file in audio_input:
-        st.info("Fichier audio n°%s : %s" % (i, audio_file.name))
-        # if audio_file.type == "video/mp4":
-        #     mp4_file = VideoFileClip(audio_file)
-        #     mp4_file.audio.write_audiofile(path_to_file)
-        # if audio_file.type == "audio/mpeg":
+        st.info("Transcription du fichier audio n°%s : %s" % (i, audio_file.name))
         audio_file_path = path_to_file
         with open(audio_file_path, "wb") as f:
             f.write(audio_file.getbuffer())
             transcript = openai.Audio.transcribe("whisper-1", open(audio_file_path, 'rb'))["text"]
-            st.write(transcript)
+            
+            if formate_checkbox:
+                tokens = nltk.tokenize.word_tokenize(transcript)
+                st.info("Formatage du texte sous forme de dialogue.")
+                if len(tokens) > 1000:
+                    # create a loop to call the API for each part, the first loop take the 1000 first tokens, the second loop take the 1000 next tokens, until the end of the text
+                    for i in range(0, len(tokens), 1000):
+                        resp = openai.Completion.create(
+                            model="text-davinci-003",
+                            prompt=f"""\
+                            Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                            L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                            
+                            Texte à transformer : "{nltk.tokenize.treebank.TreebankWordDetokenizer().detokenize(tokens[i:i+1000])}"
+                            """,
+                            max_tokens=1000,
+                            temperature=0.1,           
+                        )
+                        st.write(resp["choices"][0]["text"])
+                
+                else:
+                    st.info("Formatage du texte sous forme de dialogue.")
+                    resp = openai.Completion.create(
+                        model="text-davinci-003",
+                        prompt=f"""\
+                        Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                        L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                        
+                        Texte à transformer : "{transcript}"
+                        """,
+                        max_tokens=1000,
+                        temperature=0.1,           
+                    )
+                    st.write(resp["choices"][0]["text"])
+            else:
+                st.write(transcript)
+            
             # delete the file
         os.remove(audio_file_path)
         i += 1

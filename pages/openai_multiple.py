@@ -389,9 +389,7 @@ Essai : {essai}
 --- 
 SCORES
 Flesch : {scores['flesch']}
-(Grade moyen : {scores['grade_moyen']} (Dale Chall {scores['dale_chall']}, Flesch Kincaid {scores['flesch_kincaid']}, Automated Readability Index {scores['automated_readability']}))
 BERT : {round(scores['bert_f1'], 2)} (Precision : {round(scores['bert_precision'], 2)}, Recall : {round(scores['bert_recall'], 2)})
-Reading time : environ {scores['reading_time']} {"secondes" if scores['reading_time'] < 60 else "minutes"}
 Nombre de mots : {len(response.split())}, Nombre de tokens : {scores['tokens']}
 ---
 PRÉSENCES, DENSITÉS ET OCCURENCES DES MOTS-CLÉS
