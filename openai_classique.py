@@ -17,18 +17,14 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
 col1, col2 = st.columns(2)
-sub_col1, sub_col2 = st.columns(2)
 
 with col1:
-    language = st.multiselect("Choisissez une ou plusieurs langue(s) :", ('Allemand', 'Anglais', 'Danois', 'Espagnol', 'Finlandais', 'Français', 'Italien', 'Norvégien', 'Néerlandais', 'Portugais', 'Russe', 'Suédois'), default=['Français'], help="Choisissez une ou plusieurs langues, la traduction est gérée directement selon les langages choisis.")
+    words_number = st.slider("Choisissez la longueur à générer :", 50, 2000, 750, 50, help="Un token correspond plus ou moins à une syllabe. 'Chat' = 1 token, 'Montagne' = 3 tokens, 'Sarkozy' = 4 tokens car mot peu commun.")
+
+# with col2:
+#     algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive https://beta.openai.com/docs/models/gpt-3")
 
 with col2:
-    algo = st.selectbox(label="Choisissez un algorithme :", options=('text-davinci-003', 'text-curie-001'), help="DaVinci es le plus polyvalent, Curie est utile pour le ML et l'analyse prédictive https://beta.openai.com/docs/models/gpt-3")
-
-with sub_col1:
-    words_number = st.slider("Choisissez le nombre de mots (tokens) à générer :", 50, 2000, (250, 750), 50, help="Un token correspond plus ou moins à une syllabe. 'Chat' = 1 token, 'Montagne' = 3 tokens, 'Sarkozy' = 4 tokens car mot peu commun.")
-
-with sub_col2:
     temperature = st.slider("Choisissez la température (originalité) :", 0.0, 1.0, 0.5, 0.05, help="Une température plus élevée signifie que le modèle prendra plus de risques. Essayez 0.9 pour des applications plus créatives et 0 pour celles avec une réponse bien définie. Avec une température de 0.9, il est probable que les résultats soient en anglais.")
 
 
@@ -42,7 +38,7 @@ df_examples = pd.DataFrame(
         ['Générer une structure de texte/Générer le plan d\'un article', 'Crée un plan de dissertation en rapport avec les caves à vin et leurs détails techniques', 'Structure de texte'],
         ['Générer un texte à partir de mots/phrases clé(e)s', 'Ecrit un texte en rapport avec les caves à vin en te basant sur ces mots-clés : cave, vin, température, humidité, Ma Cave à Vin, blog, passion, etc.', 'Mots-clés'],
         ['Extraire des mots-clés', 'Extrait les mots clés de ce texte : [entrer un texte]', 'Mots-clés'],
-        # ['Traducteur', 'Traduit ce texte en 1. anglais, 2. espagnol, et 3. portugais : [entrer un texte]', 'Traduction'],
+        ['Traduire un texte', 'Traduit ce texte en [Langues] : [entrer un texte]', 'Autres'],
         ['Résumer un texte', 'Résume ce texte : [entrer un texte]', 'Autres'],
         ['Résumer un texte en liste à puces', 'Résume cela comme une liste à puces: [texte collé]', 'Autres'],
         ['Utiliser un pronom différent', 'Ecrit un texte à propos des caves à vins en utilisant le pronom "je"', 'Syntaxe'],
@@ -73,7 +69,7 @@ df_examples = pd.DataFrame(
         ['Générer une expression régulière (REGEX)', 'Génère la regex correspondant [consigne de la regex]', 'Autres'],
         ['Développer un sujet', 'Développe le sujet suivant : [sujet]', 'Génération d\'idées'],
     ], 
-    index=[[i for i in range(1, 34)]]
+    index=[[i for i in range(1, 35)]]
 )
 
 
@@ -90,6 +86,7 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Crée une structure de texte pour un [TYPE DE CONTENU] en rapport avec le [SUJET] OU Donne le plan d\'un article sur le [SUJET] (ayant pour titre [TITRE]) qui s\'adresse à [CIBLE]', # Structure de texte
      'Ecrit un texte en rapport avec le [SUJET] en te basant sur ces mots-clés : [MOTS-CLES]', # KW
      'Extrait les mots-clés de ce texte : [TEXTE]', # KW
+     'Traduit ce texte en [LANGUE] : [TEXTE]', # Traduction
      'Résume ce texte : [TEXTE]', # Résumé
      'Résume cela comme une liste à puces: [TEXTE]', # Résumé
      'Ecrit un texte en rapport avec le [SUJET] en utilisant le pronom [PRONOM]', # Syntaxe
@@ -134,10 +131,10 @@ input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :", value=inputs
 
 
 
-text = f"{input}. Tu es un rédacteur dans une agence de référencement web qui rédige des textes pour soigner le SEO. Le texte se doit d'être intelligible et de respecter les consignes fournies ci-dessus. Le texte doit être entre {words_number[0]} et {words_number[1]} mots. Traduction en {', '.join(language)}."
+text = f"{input}. Tu es un rédacteur dans une agence de référencement web qui rédige des textes pour soigner le SEO. Le texte se doit d'être intelligible et de respecter les consignes fournies ci-dessus. Le texte doit être d'environ {words_number} mots."
 if st.button('Générer le texte'):
     response = openai.Completion.create(
-        engine = algo,
+        engine = 'text-davinci-003',
         prompt = text,
         temperature= temperature,
         max_tokens= 1000
