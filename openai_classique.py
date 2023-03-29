@@ -9,10 +9,10 @@ st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout=
 # load_dotenv()
 
 # DEV
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # PROD
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
@@ -68,8 +68,9 @@ df_examples = pd.DataFrame(
         ['Corriger les fautes d\'orthographe et de grammaire', 'Corrige les fautes d\'orthographe, de grammaire et de ponctuation dans le texte suivant, sans modifier les phrases : [texte]', 'Syntaxe'],
         ['Générer une expression régulière (REGEX)', 'Génère la regex correspondant [consigne de la regex]', 'Autres'],
         ['Développer un sujet', 'Développe le sujet suivant : [sujet]', 'Génération d\'idées'],
+        ['Générer une stratégie SEO', 'Donne une stratégie SEO pour le site [site]', 'Autres'],
     ], 
-    index=[[i for i in range(1, 35)]]
+    index=[[i for i in range(1, 36)]]
 )
 
 
@@ -113,6 +114,7 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Corrige les fautes d\'orthographe, de grammaire, de syntaxe et de ponctuation dans le texte suivant : [TEXTE]', # Syntaxe
      'Génère une expression régulère qui permet de [CONSIGNE]', # Regex
      'Développe le sujet suivant : [SUJET]', # Brainstorm
+     'Prépare moi une stratégie SEO pour le site web [URL]. Ce site web est [DETAILS DU SITE]. Explique moi les points sur lesquels nous devrions mettre l’accent, ce que nous devrions faire pour avoir un SEO performant et ainsi toucher un maximum de prospects lorsqu’ils recherchent sur Google.'
     ]
 
 # add the inputs df to the examples df as the col 'Input'
