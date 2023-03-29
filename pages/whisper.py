@@ -55,7 +55,6 @@ if audio_input is not None and st.button('Transcrire'):
                         st.write(resp["choices"][0]["text"])
                 
                 else:
-                    st.info("Formatage du texte sous forme de dialogue.")
                     resp = openai.Completion.create(
                         model="text-davinci-003",
                         prompt=f"""\
