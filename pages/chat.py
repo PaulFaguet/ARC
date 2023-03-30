@@ -34,17 +34,3 @@ if ask:
     st.session_state.messages.append({"role": "system", "content": resp})
     st.session_state.quotas += 1
     st.write(resp)
-    
-import datetime
-start_date = '2022-11-22'
-
-# add 30 days to the date
-new_date = (datetime.datetime.strptime(start_date, '%Y-%m-%d') + datetime.timedelta(days=31)).strftime('%Y-%m-%d')
-new_date
-date_test = datetime.datetime.strptime(new_date, '%Y-%m-%d') + datetime.timedelta(days=30)
-date_test = date_test.strftime('%Y-%m-%d')
-date_test = datetime.datetime.strptime(date_test, '%Y-%m-%d') + datetime.timedelta(days=30)
-date_test = date_test.strftime('%Y-%m-%d')
-date_test = datetime.datetime.strptime(date_test, '%Y-%m-%d') - datetime.timedelta(days=30)
-date_test = date_test.strftime('%Y-%m-%d')
-
