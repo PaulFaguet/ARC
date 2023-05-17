@@ -70,8 +70,10 @@ df_examples = pd.DataFrame(
         ['Développer un sujet', 'Développe le sujet suivant : [sujet]', 'Génération d\'idées'],
         ['Générer une stratégie SEO', 'Donne une stratégie SEO pour le site [site]', 'Autres'],
         ['Générer des personas', 'Donne 3 personas pour le site [site]', 'Autres'],
+        ['Générer un plan édito de campagne SEA', 'Génère un plan éditorial de campagne d\'après les informations suivantes : [Objectif de la campagne], [Budget], [Période de la campagne], [Thématique de la campagne], [Public cible], [Canaux publicitaires], [Mots-Clés]', 'SEA'],
+        ['Générer un brief rédactionnel', 'Agis comme un [FONCTION]. Rédige un plan pour [TYPE DE CONTENU] de [NOMBRE DE MOTS] qui a pour titre [TITRE]. Cet article a pour objectif [OBJECTIF]. Il s\'adresse à [CIBLES]. Le plan doit contenir une introduction et tu dois donner le nombre de mots par partie. Il doit y avoir [NOMBRE DE PARTIES] h2 et [NOMBRE DE SOUS-PARTIES] h3. Tu détailles les points clés à aborder dans chaque partie [PRÉCISION]. La conclusion doit contenir un appel à l\'action pour entrer en contact avec l\'entreprise. Le ton doit être [TONALITÉ].', 'Structure de texte'],
     ], 
-    index=[[i for i in range(1, 37)]]
+    index=[[i for i in range(1, 39)]]
 )
 
 
@@ -116,7 +118,9 @@ inputs = ['Liste moi des mots-clés en rapport avec le [SUJET]', # KW
      'Génère une expression régulère qui permet de [CONSIGNE]', # Regex
      'Développe le sujet suivant : [SUJET]', # Brainstorm
      'Prépare moi une stratégie SEO pour le site web [URL]. Ce site web est [DETAILS DU SITE]. Explique moi les points sur lesquels nous devrions mettre l’accent, ce que nous devrions faire pour avoir un SEO performant et ainsi toucher un maximum de prospects lorsqu’ils recherchent sur Google.', # SEO
-     'Génère une liste de personas pour [SITE] ? Le but est d’avoir quelques profils et leurs caractéristiques, leurs attentes, leurs freins, afin de pouvoir les cibler plus précisément et leur apporter les réponses qu’ils attentes dans le style de contenu qu’ils préférent.'
+     'Génère une liste de personas pour [SITE]. Le but est d’avoir quelques profils et leurs caractéristiques, leurs attentes, leurs freins, afin de pouvoir les cibler plus précisément et leur apporter les réponses qu’ils attentes dans le style de contenu qu’ils préférent.',
+     'Génère un plan éditorial pour une campagne SEA d\'après les informations suivantes : [Objectif de la campagne], [Budget], [Période de la campagne], [Thématique de la campagne], [Public cible], [Canaux publicitaires], [Mots-Clés], etc.', # SEA
+     'Agis comme un [FONCTION]. Rédige un plan pour [TYPE DE CONTENU] de [NOMBRE DE MOTS] qui a pour titre [TITRE]. Cet article a pour objectif [OBJECTIF]. Il s\'adresse à [CIBLES]. Le plan doit contenir une introduction et tu dois donner le nombre de mots par partie. Il doit y avoir [NOMBRE DE PARTIES] h2 et [NOMBRE DE SOUS-PARTIES] h3. Tu détailles les points clés à aborder dans chaque partie [PRÉCISION]. La conclusion doit contenir un appel à l\'action pour entrer en contact avec l\'entreprise. Le ton doit être [TONALITÉ].', # SEO
     ]
 
 # add the inputs df to the examples df as the col 'Input'
@@ -129,7 +133,7 @@ with inp_col1:
 inputs_df = pd.DataFrame({'Consigne': df_examples['Utilisation'].values.tolist(), 'Input': inputs, 'Type': df_examples['Type'].values.tolist()})
 
 with inp_col2:
-    input_selector = st.selectbox("Choisissez un input pré-rempli", inputs_df[inputs_df['Type'].isin(action_selector)])
+    input_selector = st.selectbox("Choisissez un input pré-rempli", inputs_df[inputs_df['Type'].isin(action_selector)].sort_values(by='Consigne'))
 
 input = st.text_area("Entrez une phrase pour l'algorithme GPT-3 :", value=inputs_df[inputs_df['Consigne'] == input_selector]['Input'].values[0] if input_selector else "")
 
