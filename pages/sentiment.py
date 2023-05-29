@@ -27,6 +27,7 @@ def formate_options(options):
 
 
 
+st.title('Analyse de sentiments')
 
 file_input = st.file_uploader("Importer un fichier XLSX", type="xlsx")
 
