@@ -3,8 +3,5 @@
 .env
 fine-tuning/
 
-Hippopotamus_Yext.xlsx.xlsx
 result.txt
-Sentiment Test.xlsx
-Sentiment.xlsx
 test.py
