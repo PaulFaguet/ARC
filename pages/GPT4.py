@@ -21,7 +21,7 @@ if 'messages' not in st.session_state:
         {"role": "system", "content": "You are a helpful assistant."}
     ]
 
-input = st.text_input(label='Input')
+input = st.text_area(label='Input')
 ask = st.button('Ask')
 if ask:
     st.session_state.messages.append({"role": "user", "content": input})
