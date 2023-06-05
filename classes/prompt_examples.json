@@ -1,0 +1,192 @@
+[
+    {
+        "Utilisation":"Cr\u00e9er une liste de mots-cl\u00e9s",
+        "Saisie":"Liste moi des mots-cl\u00e9s en rapport avec le [SUJET]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer des id\u00e9es\/Brainstorming",
+        "Saisie":"Brainstorm des id\u00e9es de contenu en rapport avec le [SUJET]",
+        "Type":"G\u00e9n\u00e9ration d'id\u00e9es"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une FAQ",
+        "Saisie":"Cr\u00e9e une liste de question fr\u00e9quemment pos\u00e9es en rapport avec le [SUJET]",
+        "Type":"Questions\/FAQ"
+    },
+    {
+        "Utilisation":"Utiliser un langage plus ou moins soutenu",
+        "Saisie":"Ecrit un texte \u00e0 propos du [SUJET] en utilisant un langage simple",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une structure de texte\/G\u00e9n\u00e9rer le plan d'un article",
+        "Saisie":"Cr\u00e9e une structure de texte pour un [TYPE DE CONTENU] en rapport avec le [SUJET] OU Donne le plan d'un article sur le [SUJET] (ayant pour titre [TITRE]) qui s'adresse \u00e0 [CIBLE]",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un texte \u00e0 partir de mots\/phrases cl\u00e9(e)s",
+        "Saisie":"Ecrit un texte en rapport avec le [SUJET] en te basant sur ces mots-cl\u00e9s : [MOTS-CLES]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"Extraire des mots-cl\u00e9s",
+        "Saisie":"Extrait les mots-cl\u00e9s de ce texte : [TEXTE]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"Traduire un texte",
+        "Saisie":"Traduit ce texte en [LANGUE] : [TEXTE]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"R\u00e9sumer un texte",
+        "Saisie":"R\u00e9sume ce texte : [TEXTE]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"R\u00e9sumer un texte en liste \u00e0 puces",
+        "Saisie":"R\u00e9sume cela comme une liste \u00e0 puces: [TEXTE]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"Utiliser un pronom diff\u00e9rent",
+        "Saisie":"Ecrit un texte en rapport avec le [SUJET] en utilisant le pronom [PRONOM]",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"Classer des mots-cl\u00e9s en diff\u00e9rentes cat\u00e9gories\/Regrouper les mots-cl\u00e9s en clusters th\u00e9matiques",
+        "Saisie":"Classe les mots-cl\u00e9s suivants en X cat\u00e9gories : [MOTS-CLES] OU Regroupe les mots-cl\u00e9s suivants en clusters (proximit\u00e9 s\u00e9mantique) puis donne leur chacun un nom : [MOTS-CLES]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une \u00e9tude mots-cl\u00e9s",
+        "Saisie":"G\u00e9n\u00e8re une \u00e9tude de mots-cl\u00e9s en rapport avec le [SUJET]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"Am\u00e9liorer la pr\u00e9cision, la qualit\u00e9 et la longueur des r\u00e9ponses",
+        "Saisie":"Proc\u00e9dons point par point.",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"Trouver des questions sur un sujet",
+        "Saisie":"Liste les 10 principales questions que se pose la [CIBLE] \u00e0 propos du [SUJET]",
+        "Type":"Questions\/FAQ"
+    },
+    {
+        "Utilisation":"Trouver des sujets \u00e0 aborder pour une th\u00e9matique",
+        "Saisie":"Liste moi les principaux sujets \u00e0 propos du [SUJET] pour la [CIBLE]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"Lister des arguments\/avantages\/inconv\u00e9nients",
+        "Saisie":"Liste les avantages et inconv\u00e9nients du [SUJET]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"Trouver les probl\u00e9matiques d'une audience cible pr\u00e9cise concernant une th\u00e9matique pr\u00e9cise",
+        "Saisie":"Liste les principaux probl\u00e8mes que rencontre la [CIBLE] \u00e0 propos du [SUJET]",
+        "Type":"G\u00e9n\u00e9ration d'id\u00e9es"
+    },
+    {
+        "Utilisation":"Trouver les expressions \u00e0 inclure pour renforcer un texte",
+        "Saisie":"Liste moi les expressions en restant dans le champ lexical\/champ s\u00e9mantique du [SUJET] (\u00e0 inclure dans un [TYPE DE CONTENU])",
+        "Type":"G\u00e9n\u00e9ration d'id\u00e9es"
+    },
+    {
+        "Utilisation":"Regrouper les mots-cl\u00e9s selon l'intention de recherche associ\u00e9e",
+        "Saisie":"Je veux conna\u00eetre l'intention de recherche de chaque mot-cl\u00e9 de la liste, \u00e0 classer parmi navigationnelle, informationnelle, commerciale ou transactionelle : [MOTS-CLES]",
+        "Type":"Mots-cl\u00e9s"
+    },
+    {
+        "Utilisation":"D\u00e9terminer le sentiment d'un texte",
+        "Saisie":"Pour chaque texte de la liste, indique le sentiment qui s'en d\u00e9gage : positif, neutre ou n\u00e9gatif. [TEXTES]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un brief \u00e9ditorial",
+        "Saisie":"G\u00e9n\u00e8re un brief \u00e9ditorial qui d\u00e9taille ce qu'un r\u00e9dacteur SEO doit faire pour \u00e9crire un article de qualit\u00e9 ayant pour titre \"[TITRE]\". Il s'adresse \u00e0 [CIBLE]. Propose un nouveau titre, un plan (avec des H2 et H3), les mots-cl\u00e9s importants, des entit\u00e9s (marques, produits, services, dates cl\u00e9s), les principales sources d\\information",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un texte court (m\u00e9ta description)",
+        "Saisie":"G\u00e9n\u00e8re un texte de m\u00e9ta description pour un article ayant pour titre [TITRE]",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer des titres",
+        "Saisie":"Donne moi des titres pour des [TYPES DE CONTENUS] sur le [SUJET] qui ciblent la [CIBLE]",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une description de fiche produit",
+        "Saisie":"Fais une description du [SUJET] qui sera publi\u00e9e sur une fiche produit d'un site ecommerce. En incluant un sous-titre pour chaque partie, d\u00e9taille les caract\u00e9ristiques, explique \u00e0 qui il est destin\u00e9, \u00e0 quoi il sert, comment on l'installe, comment on l'utilise, combien de temps il peut servir, pourquoi ce produit et pas un autre, etc.",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une nouvelle version d'un texte",
+        "Saisie":"G\u00e9n\u00e8re une nouvelle version de ce texte : [TEXTE]",
+        "Type":"Structure de texte"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un glossaire\/lexique",
+        "Saisie":"G\u00e9n\u00e8re un glossaire\/lexique des termes en rapport avec le [SUJET]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"Reformuler un texte qui contient des phrases longues",
+        "Saisie":"Reformule ce texte avec des phrases plus courtes\/simples et faciles \u00e0 lire\/en supprimant les r\u00e9p\u00e9titions\/en utilisant davantage de synonymes : [TEXTE]",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"Reformuler un texte en changeant le ton",
+        "Saisie":"Reformule ce texte dans le style [STYLE], avec des [FIGURES DE STYLE] : [TEXTE]",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"Am\u00e9liorer un texte en rajoutant des expressions de transition",
+        "Saisie":"Reformule ce texte pour inciter le lecteur \u00e0 lire jusqu'au bout en ajoutant des transitions entre les parties : [TEXTE]",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un QCM",
+        "Saisie":"G\u00e9n\u00e8re un QCM \u00e0 propos du [SUJET] pour la [CIBLE] en suivant cette structure [STRUCTURE]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"Corriger les fautes d'orthographe et de grammaire",
+        "Saisie":"Corrige les fautes d'orthographe, de grammaire, de syntaxe et de ponctuation dans le texte suivant : [TEXTE]",
+        "Type":"Syntaxe"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une expression r\u00e9guli\u00e8re (REGEX)",
+        "Saisie":"G\u00e9n\u00e8re une expression r\u00e9gul\u00e8re qui permet de [CONSIGNE]",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"D\u00e9velopper un sujet",
+        "Saisie":"D\u00e9veloppe le sujet suivant : [SUJET]",
+        "Type":"G\u00e9n\u00e9ration d'id\u00e9es"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer une strat\u00e9gie SEO",
+        "Saisie":"Pr\u00e9pare moi une strat\u00e9gie SEO pour le site web [URL]. Ce site web est [DETAILS DU SITE]. Explique moi les points sur lesquels nous devrions mettre l\u2019accent, ce que nous devrions faire pour avoir un SEO performant et ainsi toucher un maximum de prospects lorsqu\u2019ils recherchent sur Google.",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer des personas",
+        "Saisie":"G\u00e9n\u00e8re une liste de personas pour [SITE]. Le but est d\u2019avoir quelques profils et leurs caract\u00e9ristiques, leurs attentes, leurs freins, afin de pouvoir les cibler plus pr\u00e9cis\u00e9ment et leur apporter les r\u00e9ponses qu\u2019ils attentes dans le style de contenu qu\u2019ils pr\u00e9f\u00e9rent.",
+        "Type":"Autres"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un plan \u00e9dito de campagne SEA",
+        "Saisie":"G\u00e9n\u00e8re un plan \u00e9ditorial pour une campagne SEA d'apr\u00e8s les informations suivantes : [Objectif de la campagne], [Budget], [P\u00e9riode de la campagne], [Th\u00e9matique de la campagne], [Public cible], [Canaux publicitaires], [Mots-Cl\u00e9s], etc.",
+        "Type":"SEA"
+    },
+    {
+        "Utilisation":"G\u00e9n\u00e9rer un brief r\u00e9dactionnel",
+        "Saisie":"Agis comme un [FONCTION]. R\u00e9dige un plan pour [TYPE DE CONTENU] de [NOMBRE DE MOTS] qui a pour titre [TITRE]. Cet article a pour objectif [OBJECTIF]. Il s'adresse \u00e0 [CIBLES]. Le plan doit contenir une introduction et tu dois donner le nombre de mots par partie. Il doit y avoir [NOMBRE DE PARTIES] h2 et [NOMBRE DE SOUS-PARTIES] h3. Tu d\u00e9tailles les points cl\u00e9s \u00e0 aborder dans chaque partie [PR\u00c9CISION]. La conclusion doit contenir un appel \u00e0 l'action pour entrer en contact avec l'entreprise. Le ton doit \u00eatre [TONALIT\u00c9].",
+        "Type":"Structure de texte"
+    }
+]
