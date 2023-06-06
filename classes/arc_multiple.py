@@ -1,15 +1,12 @@
 
 from math import ceil
-
 import pandas as pd
 import nltk
-
+import os
 import openai
 import streamlit as st
 import re
-
 import textstat as ts
-
 from bert_score import score
 
 nltk.download('punkt')
@@ -17,7 +14,7 @@ nltk.download('punkt')
 class ARC_Multiple:
     def __init__(self, df):
         self.df = pd.read_excel(df)
-        # reaplce space by underscore in the column names of the df
+        # replace spaces in column names by underscores
         self.df.columns = [col.replace(' ', '_') for col in self.df.columns]        
     
     def _generate_result(self, prompt: str):
@@ -31,12 +28,12 @@ class ARC_Multiple:
         # return self._formate_result(response['choices'][0]['text'])
         return response['choices'][0]['text']
     
-    def _formate_result(self, response: str):
-        response = [line for line in response if line != '']
-        response = '\n'.join(response)
-        response = response.replace('"', '"""')
+    # def _formate_result(self, response: str):
+    #     response = [line for line in response if line != '']
+    #     response = '\n'.join(response)
+    #     response = response.replace('"', '"""')
         
-        return response
+    #     return response
 
     def _parse_df_by_row(self, index: int):
         article_id = self.df.loc[index, "Article_ID"]
@@ -244,19 +241,19 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
     
     def is_result_need_to_be_regenerated(self, index: int, response: str, sujet: str):
         nombre_mots_avg = self._get_avg_words_number(index)
-        keywords_density_and_occurences = self._sort_keywords_dict(self._calculate_density_and_occurences_of_keywords(self._parse_keywords(index), response))
+        keywords_density_and_occurences = self._sort_keywords_dict(self._calculate_density_and_occurences_of_keywords(self._get_keywords_dict(index), response))
 
         # on relance si : flesch < 50 ou bert F1 < 0.4 ou densité d'un kw primaire > 5 ou écart de 15% entre le nombre de mots demandé et le nombre de mots du texte généré
-        
         conditions = {
             'flesch': self._get_score_flesch(response) < 50,
-            'bert_f1': self._get_score_bert(response, sujet)[0] < 0.4,
+            # 'bert_f1': self._get_score_bert(response, sujet)[0] < 0.4,
             'primary_kw_density': any([kw[1] > 5 for kw in keywords_density_and_occurences["primary_keywords"]]),
             'word_gap': abs(len(response.split()) - nombre_mots_avg) > nombre_mots_avg * 0.15
         }
         
-        # if there is one true condition, we return True
+        # if there is one true condition, returns True
         if any(conditions.values()):
+            st.info(f'The text needs to be regenerated because of : {conditions}')
             return True
         else:
             return False
@@ -268,18 +265,20 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
 
         response = self._generate_result(self._create_prompt(index))
         
-        # while self.is_result_need_to_be_regenerated(index, response, row['sujet']):
-        #     st.write('WHILE')
-        #     if essai > 10:
-        #         break
+        while self.is_result_need_to_be_regenerated(index, response, row['sujet']):
+            st.write('WHILE')
+            if essai > 10:
+                break
             
-        #     st.write(essai)
-        #     essai += 1
-        #     response = self._generate_result(self._create_prompt(index))
+            st.warning(essai)
+            
+            essai += 1
+            response = self._generate_result(self._create_prompt(index))
         
         self._create_result_file(index, row['client'], row['sujet'], essai, response)
         
         # supprimer le fichier f"{client}-{sujet}-{index+1}.txt" ?
+        # os.remove(f"{row['client']}-{row['sujet']}-{index+1}.txt")
         
         
         return response

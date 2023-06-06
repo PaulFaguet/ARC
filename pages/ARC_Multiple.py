@@ -4,8 +4,6 @@ from classes.template_xlsx_file import Template_XLSX
 import streamlit as st
 
 
-
-
 st.set_page_config(layout="wide")
 
 st.title('Assistance à la Rédaction de Contenu - Multiple')
@@ -48,18 +46,17 @@ if st.button("Générer") and file_input:
         arc_multiple.run(index)
         
             
-    with st.sidebar: 
-        st.success("Résultats disponibles")
-        # with open(f"{row['client']}-{row['sujet']}-{index+1}.txt", "r", encoding='utf-8') as f:
-            # resp = f.read()
-        file_name = f"{row['client']}-{row['sujet']}-{index+1}.txt"
-        st.download_button(
-            label="Télécharger les résultats (.txt)",
-            data=open(file_name, "r", encoding='utf-8').read(),
-            file_name=file_name,
-            mime='text/plain',
-            # mime="application/msword"
-        )
+        with st.sidebar: 
+            st.success("Résultats disponibles")
+            # with open(f"{row['client']}-{row['sujet']}-{index+1}.txt", "r", encoding='utf-8') as f:
+                # resp = f.read()
+            file_name = f"{row['client']}-{row['sujet']}-{index+1}.txt"
+            st.download_button(
+                label=f"Télécharger les résultats ({file_name})",
+                data=open(file_name, "r", encoding='utf-8').read(),
+                file_name=file_name,
+                mime='text/plain',
+                key=file_name
+                # mime="application/msword"
+            )
             
-
-
