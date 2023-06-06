@@ -1,8 +1,8 @@
+from classes.arc_classique import ARC_Classique
+
 import streamlit as st 
 import os
 import openai
-
-from classes.classe_arc_classique import ARC_Classique
 
 st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
@@ -15,6 +15,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
 arc_classique = ARC_Classique()
+
+with st.sidebar:
+    st.write("Quelques documentations : %s" % ", ".join(["https://beta.openai.com/examples", "https://www.webrankinfo.com/dossiers/conseils/chatgpt-seo", "https://learnprompting.org/docs/intro", "https://flowgpt.com/"]))
 
 upper_col1, upper_col2 = st.columns(2)
 with upper_col1:
@@ -30,9 +33,9 @@ with lower_col2:
 
 user_text_input = st.text_area(label="", value=arc_classique.df_examples[arc_classique.df_examples['Utilisation'] == input_selector]['Saisie'].values[0] if input_selector else "")
 
-
 if user_text_input:
     if st.button('Générer le texte'):
         st.write(arc_classique.generate_answer(user_text_input, user_word_number_input, user_temperature_input))
 else:
     st.warning("Merci de saisir un prompt.")
+    
