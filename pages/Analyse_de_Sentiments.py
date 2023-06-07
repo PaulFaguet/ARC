@@ -1,4 +1,4 @@
-from classes.classe_sentiment import Sentiment
+from classes.sentiment import Sentiment
 
 import streamlit as st 
 import pandas as pd 
