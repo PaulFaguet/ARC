@@ -22,8 +22,10 @@ class ARC_Multiple:
             engine = 'text-davinci-003',
             prompt = prompt,
             temperature = 0.2,
-            max_tokens = 2000,
+            # max_tokens = 2000,
         )
+        
+        st.info(response)
 
         # return self._formate_result(response['choices'][0]['text'])
         return response['choices'][0]['text']
@@ -213,7 +215,7 @@ class ARC_Multiple:
         keywords_density_and_occurences = self._sort_keywords_dict(self._calculate_density_and_occurences_of_keywords(self._get_keywords_dict(index), response))
         
 # bert : {round(scores['bert_f1'], 2)} (Precision : {round(scores['bert_precision'], 2)}, Recall : {round(scores['bert_recall'], 2)})
-        with open(f"{client}-{sujet}-{index+1}.txt", "w", encoding='utf-8') as f:
+        with open(f"result.txt", "a", encoding='utf-8') as f:
                 f.write(f"""
 Requête n°{index+1}
 Client : {client}
@@ -258,6 +260,10 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         else:
             return False
     
+    @staticmethod
+    def _delete_result_file(file_name: str):
+        os.remove(file_name)
+    
     def run(self, index: int):
         row = self._parse_df_by_row(index)
      
@@ -266,7 +272,6 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         response = self._generate_result(self._create_prompt(index))
         
         while self.is_result_need_to_be_regenerated(index, response, row['sujet']):
-            st.write('WHILE')
             if essai > 10:
                 break
             
@@ -277,8 +282,6 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         
         self._create_result_file(index, row['client'], row['sujet'], essai, response)
         
-        # supprimer le fichier f"{client}-{sujet}-{index+1}.txt" ?
-        # os.remove(f"{row['client']}-{row['sujet']}-{index+1}.txt")
-        
-        
         return response
+    
+    

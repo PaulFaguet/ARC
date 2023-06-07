@@ -1,0 +1,14 @@
+[
+    {
+        "role": "system",
+        "content": "Tu es un assistant SEO utile."
+    },
+    {
+        "role": "user",
+        "content": "Qui est macron?"
+    },
+    {
+        "role": "assistant",
+        "content": "Emmanuel Macron est un homme politique fran\u00e7ais. Il est n\u00e9 le 21 d\u00e9cembre 1977 \u00e0 Amiens, dans le d\u00e9partement de la Somme. Il a \u00e9t\u00e9 \u00e9lu pr\u00e9sident de la R\u00e9publique fran\u00e7aise le 7 mai 2017, succ\u00e9dant ainsi \u00e0 Fran\u00e7ois Hollande. Auparavant, il avait \u00e9t\u00e9 ministre de l'\u00c9conomie, de l'Industrie et du Num\u00e9rique dans le gouvernement de Manuel Valls. Il est \u00e9galement le fondateur et le pr\u00e9sident du mouvement politique En Marche!, aujourd'hui renomm\u00e9 La R\u00e9publique En Marche !."
+    }
+]

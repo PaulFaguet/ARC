@@ -30,8 +30,8 @@ if st.button("Générer") and file_input:
 
     st.write(arc_multiple.df[["Article_ID", "Client", "Type_de_page", "Sujet", "Consignes", "Nombre_de_mots", "Structure", "Mots_clés_primaires", "Mots_clés_secondaires"]])
 
-    # with open("result.txt", "w", encoding='utf-8') as f:
-    #     f.write('')    
+    with open("result.txt", "w", encoding='utf-8') as f:
+        f.write('')    
    
     info_col1, info_col2 = st.columns([4, 1])
     for index in range(len(arc_multiple.df)):
@@ -50,13 +50,13 @@ if st.button("Générer") and file_input:
             st.success("Résultats disponibles")
             # with open(f"{row['client']}-{row['sujet']}-{index+1}.txt", "r", encoding='utf-8') as f:
                 # resp = f.read()
-            file_name = f"{row['client']}-{row['sujet']}-{index+1}.txt"
+            # file_name = f"{row['client']}-{row['sujet']}-{index+1}.txt"
             st.download_button(
-                label=f"Télécharger les résultats ({file_name})",
-                data=open(file_name, "r", encoding='utf-8').read(),
-                file_name=file_name,
+                label=f"Télécharger les résultats",
+                data=open('result.txt', "r", encoding='utf-8').read(),
+                file_name='result.txt',
                 mime='text/plain',
-                key=file_name
+                on_click=arc_multiple._delete_result_file('result.txt'),
                 # mime="application/msword"
             )
             
