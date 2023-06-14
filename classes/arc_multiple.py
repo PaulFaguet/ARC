@@ -15,17 +15,26 @@ class ARC_Multiple:
     def __init__(self, df):
         self.df = pd.read_excel(df)
         # replace spaces in column names by underscores
-        self.df.columns = [col.replace(' ', '_') for col in self.df.columns]        
+        self.df.columns = [col.replace(' ', '_') for col in self.df.columns] 
+        self.results = []
+        self._load_results()       
+    
+    def _load_results(self):
+        if "results" in st.session_state:
+            self.results = st.session_state.results
+    
+    def _save_results(self):
+        st.session_state.results = self.results
     
     def _generate_result(self, prompt: str):
         response = openai.Completion.create(
             engine = 'text-davinci-003',
             prompt = prompt,
             temperature = 0.2,
-            # max_tokens = 2000,
+            max_tokens = 3000,
         )
         
-        st.info(response)
+        # st.info(response)
 
         # return self._formate_result(response['choices'][0]['text'])
         return response['choices'][0]['text']
@@ -112,7 +121,6 @@ class ARC_Multiple:
         word = word.lower()
         
         return text.count(word)
-    
     
     def _calculate_density_and_occurences_of_keywords(self, keywords_dict: dict, response: str):
         new_kw_dict= {}
@@ -234,7 +242,9 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
 ---
 {response}
 ---
-                """)
+        """)
+        # self.results.append(content)
+        # self._save_results()
     
     def _get_avg_words_number(self, index: int):
         row = self._parse_df_by_row(index)
@@ -255,7 +265,7 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         
         # if there is one true condition, returns True
         if any(conditions.values()):
-            st.info(f'The text needs to be regenerated because of : {conditions}')
+            # st.info(f'The text needs to be regenerated because of : {conditions}')
             return True
         else:
             return False
@@ -275,7 +285,7 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
             if essai > 10:
                 break
             
-            st.warning(essai)
+            # st.warning(essai)
             
             essai += 1
             response = self._generate_result(self._create_prompt(index))
