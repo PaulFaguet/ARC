@@ -3,6 +3,7 @@ from classes.arc_classique import ARC_Classique
 import streamlit as st 
 import os
 import openai
+import pandas as pd
 
 st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
@@ -15,6 +16,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
 arc_classique = ARC_Classique()
+df_examples = pd.read_json(r'classes\prompt_examples.json')
 
 with st.sidebar:
     st.write("Quelques documentations : %s" % ", ".join(["https://beta.openai.com/examples", "https://www.webrankinfo.com/dossiers/conseils/chatgpt-seo", "https://learnprompting.org/docs/intro", "https://flowgpt.com/"]))
@@ -27,11 +29,15 @@ with upper_col2:
 
 lower_col1, lower_col2 = st.columns(2)
 with lower_col1:
-    action_selector = st.multiselect("Typologies de prompt", arc_classique.df_examples['Type'].unique(), ['Mots-clés', 'Syntaxe'])
+    # action_selector = st.multiselect("Typologies de prompt", arc_classique.df_examples['Type'].unique(), ['Mots-clés', 'Syntaxe'])
+    action_selector = st.multiselect("Typologies de prompt", df_examples['Type'].unique(), ['Mots-clés', 'Syntaxe'])
+    
 with lower_col2:
-    input_selector = st.selectbox("Prompts pré-remplis en fonction des typologies sélectionnées", arc_classique.df_examples[arc_classique.df_examples['Type'].isin(action_selector)].sort_values(by='Utilisation'))
+    # input_selector = st.selectbox("Prompts pré-remplis en fonction des typologies sélectionnées", arc_classique.df_examples[arc_classique.df_examples['Type'].isin(action_selector)].sort_values(by='Utilisation'))
+    input_selector = st.selectbox("Prompts pré-remplis en fonction des typologies sélectionnées", df_examples[df_examples['Type'].isin(action_selector)].sort_values(by='Utilisation'))
 
-user_text_input = st.text_area(label="", value=arc_classique.df_examples[arc_classique.df_examples['Utilisation'] == input_selector]['Saisie'].values[0] if input_selector else "")
+# user_text_input = st.text_area(label="", value=arc_classique.df_examples[arc_classique.df_examples['Utilisation'] == input_selector]['Saisie'].values[0] if input_selector else "")
+user_text_input = st.text_area(label="", value=df_examples[df_examples['Utilisation'] == input_selector]['Saisie'].values[0] if input_selector else "")
 
 if user_text_input:
     if st.button('Générer le texte'):
