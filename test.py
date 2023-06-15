@@ -1,28 +1,31 @@
 from classes.arc_multiple import ARC_Multiple
 import pandas as pd 
-import time
+from datetime import datetime, timedelta
 
 
-df = pd.read_csv(r'C:\Users\PFA\OneDrive - Axess OnLine\Bureau\open_ai\Feuille de calcul sans titre - Feuille 1 (1).csv')
-
-def trouver_differences_csv(file_path):
-    # Charger le fichier CSV dans un DataFrame
-    df = pd.read_csv(file_path)
-
-    # Comparer chaque ligne avec la ligne précédente et trouver les différences
-    differences = df.ne(df.shift())
-    print("differences",differences)
-
-    # Vérifier si des différences existent
-    if differences.any().any():
-        # Afficher les différences
-        for index, row in differences.iterrows():
-            print(f"Différences à la ligne {index + 1}:")
-            print(row[row].index.tolist())
-
-    else:
-        print("Aucune différence trouvée entre les lignes du CSV.")
-
-# Exemple d'utilisation
-trouver_differences_csv(r"C:\Users\PFA\OneDrive - Axess OnLine\Bureau\open_ai\Feuille de calcul sans titre - Feuille 1 (1).csv")
+# create a function that takes one argument, the number of months to add
+def getDateAfterMonths(start_date, months):
+    """
+    Function used to get the date after X months to check results on Google Search Console
+    """
+    
+    results = {
+        "M-1": {
+            "start_date": (datetime.strptime(start_date, '%Y-%m-%d') - timedelta(days=31)).strftime('%Y-%m-%d'),
+            "end_date": start_date
+        },
+        "M+1": {
+            "start_date": start_date,
+            "end_date": (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=30)).strftime('%Y-%m-%d')
+        }
+    }
+    
+    for i in range(1, months):
+        start_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=31)).strftime('%Y-%m-%d')
+        results[f"M+{i+1}"] = {
+            "start_date": start_date,
+            "end_date": (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=31)).strftime('%Y-%m-%d')
+        }
+        
+    return results
 
