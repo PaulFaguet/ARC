@@ -1,3 +1,4 @@
+from classes.mail import Mail
 
 from math import ceil
 import pandas as pd
@@ -12,10 +13,14 @@ from bert_score import score
 nltk.download('punkt')
 
 class ARC_Multiple:
-    def __init__(self, df):
+    def __init__(self, df: str, export_mail: bool = False, mail: str = None):
         self.df = pd.read_excel(df)
         # replace spaces in column names by underscores
-        self.df.columns = [col.replace(' ', '_') for col in self.df.columns] 
+        self.df.columns = [col.replace(' ', '_') for col in self.df.columns]
+        
+        self.export_mail = export_mail
+        self.mail = mail
+         
         self.results = []
         self._load_results()       
     
@@ -243,6 +248,27 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
 {response}
 ---
         """)
+                
+        with open(f"temp_result.txt", "w", encoding='utf-8') as f:
+                f.write(f"""
+Requête n°{index+1}
+Client : {client}
+Sujet : {sujet}
+Essai : {essai}
+--- 
+SCORES
+Flesch : {scores['flesch']}
+Nombre de mots : {len(response.split())}, Nombre de tokens : {scores['tokens']}
+---
+PRÉSENCES, DENSITÉS ET OCCURENCES DES MOTS-CLÉS
+Mots-clés primaires intégrés : {keywords_density_and_occurences["primary_keywords"] if "primary_keywords" in keywords_density_and_occurences else ""}
+Mots-clés primaires non intégrés : {keywords_density_and_occurences["primary_keyword_missing"] if "primary_keyword_missing" in keywords_density_and_occurences else ""}
+Mots-clés secondaires intégrés : {keywords_density_and_occurences["secondary_keywords"] if "secondary_keywords" in keywords_density_and_occurences else ""}
+Mots-clés secondaires non intégrés : {keywords_density_and_occurences["secondary_keyword_missing"] if "secondary_keyword_missing" in keywords_density_and_occurences else ""}
+---
+{response}
+---
+        """)
         # self.results.append(content)
         # self._save_results()
     
@@ -274,7 +300,11 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
     def _delete_result_file(file_name: str):
         os.remove(file_name)
     
-    def run(self, index: int):
+    def _send_mail(self, row):
+        mail_object = f"{row['client']} : \"{row['sujet']}\" ({row['type']})"
+        Mail(self.mail, mail_object).run()
+    
+    def run(self, index: int):  
         row = self._parse_df_by_row(index)
      
         essai = 1
@@ -284,14 +314,15 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         while self.is_result_need_to_be_regenerated(index, response, row['sujet']):
             if essai > 10:
                 break
-            
-            # st.warning(essai)
-            
+
             essai += 1
             response = self._generate_result(self._create_prompt(index))
         
         self._create_result_file(index, row['client'], row['sujet'], essai, response)
-        
+            
+        if self.export_mail == True:
+            self._send_mail(row)
+                    
         return response
     
     
