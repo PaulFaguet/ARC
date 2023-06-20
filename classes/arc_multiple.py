@@ -1,4 +1,4 @@
-from classes.mail import Mail
+# from classes.mail import Mail
 
 from math import ceil
 import pandas as pd
