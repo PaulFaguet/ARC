@@ -300,9 +300,9 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
     def _delete_result_file(file_name: str):
         os.remove(file_name)
     
-    def _send_mail(self, row):
-        mail_object = f"{row['client']} : \"{row['sujet']}\" ({row['type']})"
-        Mail(self.mail, mail_object).run()
+    # def _send_mail(self, row):
+    #     mail_object = f"{row['client']} : \"{row['sujet']}\" ({row['type']})"
+    #     Mail(self.mail, mail_object).run()
     
     def run(self, index: int):  
         row = self._parse_df_by_row(index)
@@ -320,8 +320,8 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         
         self._create_result_file(index, row['client'], row['sujet'], essai, response)
             
-        if self.export_mail == True:
-            self._send_mail(row)
+        # if self.export_mail == True:
+        #     self._send_mail(row)
                     
         return response
     
