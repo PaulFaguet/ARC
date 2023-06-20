@@ -16,7 +16,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
 arc_classique = ARC_Classique()
-df_examples = pd.read_json(r'classes\prompt_examples.json')
+df_examples = pd.read_json(r'prompt_examples.json')
 
 with st.sidebar:
     st.write("Quelques documentations : %s" % ", ".join(["https://beta.openai.com/examples", "https://www.webrankinfo.com/dossiers/conseils/chatgpt-seo", "https://learnprompting.org/docs/intro", "https://flowgpt.com/"]))
