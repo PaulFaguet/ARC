@@ -8,6 +8,8 @@ st.set_page_config(layout="wide")
 
 st.title('Assistance à la Rédaction de Contenu - Multiple')
 
+st.error("L'envoie par mail n'est pas disponible pour le moment.")
+
 with st.sidebar:     
     st.info("Le bouton de téléchargement s'affichera ici dès que les résultats seront prêts")
 
