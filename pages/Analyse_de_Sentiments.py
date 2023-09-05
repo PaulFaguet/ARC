@@ -1,4 +1,4 @@
-from classes.classe_sentiment import Sentiment
+from classes.sentiment import Sentiment
 
 import streamlit as st 
 import pandas as pd 
@@ -6,44 +6,22 @@ import traceback
 from datetime import datetime
 
 
-def formate_options(options):
-    options_json = {
-        'execution_time': False,
-        'export': False
-    }
-    
-    if options:
-        if 'Temps d\'exécution' in options:
-            options_json['execution_time'] = True
-            
-        if 'Export' in options:
-            options_json['export'] = True  
-
-    return options_json
-
-
-
-
-
-
 
 st.title('Analyse de sentiments')
 
 file_input = st.file_uploader("Importer un fichier XLSX", type="xlsx")
 
-options = st.multiselect('Choisissez les options à ajouter', 
-    ['Temps d\'exécution', 'Export'], 
-    help='"Temps d\'exécution" permet d\'afficher le temps d\'exécution du traitement. "Export en excel" permet d\'exporter les résultats en excel.', 
-    default=['Export']
-)
+options_col1, options_col2 = st.columns(2)
+with options_col1:
+    export = st.checkbox('Exporter les résultats en excel', value=True)
+with options_col2:
+    execution_time = st.checkbox('Afficher le temps d\'exécution', value=False)
 
 if st.button('Lancer le traitement'):
     if file_input is not None:
         df = pd.read_excel(file_input)
         
-        formatted_options = formate_options(options)
-        
-        sentiment = Sentiment(df, export=formatted_options['export'], execution_time=formatted_options['execution_time'])
+        sentiment = Sentiment(df, export=export, execution_time=execution_time)
 
         st.write(sentiment.df[['Last Updated Date', 'ID', 'Review']])
         

@@ -106,6 +106,6 @@ class Sentiment:
         if self.execution_time:
             st.info(f'Temps d\'exécution : {ceil((time.time() - start)/60)} minutes')
             
-        # self.df['Sentiment'] = results
+        self.df['Sentiment'] = results
         
         return

@@ -2,6 +2,11 @@
 .vscode/
 .env
 fine-tuning/
-
+openai_classique.py
 result.txt
+temp_result.txt
 test.py
+service_account.json
+data.csv
+test.py
+conversation.json
