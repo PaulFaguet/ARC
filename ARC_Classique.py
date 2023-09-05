@@ -5,7 +5,7 @@ import os
 import openai
 import pandas as pd
 
-st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Adcom - ARC", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
 # DEV
 # openai.api_key = os.getenv("OPENAI_API_KEY")
