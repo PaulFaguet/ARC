@@ -22,16 +22,24 @@ class Sentiment:
     def _question_davinci_model(self, review: str):
         prompt = f"D'après l'avis suivant, détermine le sentiment exprimé parmi les qualificatifs suivants : positif, neutre ou négatif.\n\nAvis : {review}\n\nSentiment :"
         
-        response = openai.Completion.create(
-            # model='text-davinci-003',
-            model='text-curie-001',
-            prompt=prompt,
-            temperature=0.1,
-            # max_tokens=self._tokenizer(review),
-            max_tokens=1000
+        # response = openai.Completion.create(
+        #     # model='text-davinci-003',
+        #     model='text-curie-001',
+        #     prompt=prompt,
+        #     temperature=0.1,
+        #     # max_tokens=self._tokenizer(review),
+        #     max_tokens=1000
+        # )
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": "Tu es un expert SEO."},
+                {"role": "user", "content": prompt},
+            ]
         )
         
-        response = response['choices'][0]['text'].replace('.', '').lower()
+        response = response.choices[0].message.content.replace('.', '').lower()
         
         return response
 

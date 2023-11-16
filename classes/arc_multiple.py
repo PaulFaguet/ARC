@@ -1,4 +1,4 @@
-# from classes.mail import Mail
+from classes.mail import Mail
 
 from math import ceil
 import pandas as pd
@@ -32,17 +32,25 @@ class ARC_Multiple:
         st.session_state.results = self.results
     
     def _generate_result(self, prompt: str):
-        response = openai.Completion.create(
-            engine = 'text-davinci-003',
-            prompt = prompt,
-            temperature = 0.2,
-            max_tokens = 3000,
+        # response = openai.Completion.create(
+        #     engine = 'text-davinci-003',
+        #     prompt = prompt,
+        #     temperature = 0.2,
+        #     max_tokens = 3000,
+        # )
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": "Tu es un expert SEO."},
+                {"role": "user", "content": prompt},
+            ]
         )
         
         # st.info(response)
 
         # return self._formate_result(response['choices'][0]['text'])
-        return response['choices'][0]['text']
+        return response.choices[0].message.content
     
     # def _formate_result(self, response: str):
     #     response = [line for line in response if line != '']
@@ -205,7 +213,7 @@ class ARC_Multiple:
         row = self._parse_df_by_row(index)
 
         prompt = f"""
-        Tu es un expert SEO depuis 20 ans. Tu rédiges des textes pour optimiser le SEO de sites internet. 
+        Tu es un expert SEO. Tu rédiges des textes pour optimiser le SEO de sites internet. 
 
         Le texte se doit d'être intelligible et de respecter scrupuleusement les consignes fournies ci-dessous.
         Rédige un texte de {row['nombre_mots']} mots pour {row['type']} sur le sujet suivant : {row['sujet']}.
@@ -300,9 +308,9 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
     def _delete_result_file(file_name: str):
         os.remove(file_name)
     
-    # def _send_mail(self, row):
-    #     mail_object = f"{row['client']} : \"{row['sujet']}\" ({row['type']})"
-    #     Mail(self.mail, mail_object).run()
+    def _send_mail(self, row):
+        mail_object = f"{row['client']} : \"{row['sujet']}\" ({row['type']})"
+        Mail(self.mail, mail_object).send_mail()
     
     def run(self, index: int):  
         row = self._parse_df_by_row(index)
@@ -320,8 +328,8 @@ Mots-clés secondaires non intégrés : {keywords_density_and_occurences["second
         
         self._create_result_file(index, row['client'], row['sujet'], essai, response)
             
-        # if self.export_mail == True:
-        #     self._send_mail(row)
+        if self.export_mail == True:
+            self._send_mail(row)
                     
         return response
     

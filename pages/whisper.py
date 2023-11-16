@@ -41,30 +41,54 @@ if audio_input is not None and st.button('Transcrire'):
                 if len(tokens) > 1000:
                     # create a loop to call the API for each part, the first loop take the 1000 first tokens, the second loop take the 1000 next tokens, until the end of the text
                     for i in range(0, len(tokens), 1000):
-                        resp = openai.Completion.create(
-                            model="text-davinci-003",
-                            prompt=f"""\
-                            Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
-                            L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                        # resp = openai.Completion.create(
+                        #     model="text-davinci-003",
+                        #     prompt=f"""\
+                        #     Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                        #     L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
                             
-                            Texte à transformer : "{nltk.tokenize.treebank.TreebankWordDetokenizer().detokenize(tokens[i:i+1000])}"
-                            """,
-                            max_tokens=1000,
-                            temperature=0.1,           
+                        #     Texte à transformer : "{nltk.tokenize.treebank.TreebankWordDetokenizer().detokenize(tokens[i:i+1000])}"
+                        #     """,
+                        #     max_tokens=1000,
+                        #     temperature=0.1,           
+                        # )
+                        resp = openai.ChatCompletion.create(
+                            model="gpt-4-1106-preview",
+                            messages=[
+                                {"role": "system", "content": "Tu es un expert SEO."},
+                                {"role": "user", "content": f"""Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                                    L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                                    
+                                    Texte à transformer : "{nltk.tokenize.treebank.TreebankWordDetokenizer().detokenize(tokens[i:i+1000])}"
+                                    """,
+                                },
+                            ]
                         )
                         st.write(resp["choices"][0]["text"])
                 
                 else:
-                    resp = openai.Completion.create(
-                        model="text-davinci-003",
-                        prompt=f"""\
-                        Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
-                        L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                    # resp = openai.Completion.create(
+                    #     model="text-davinci-003",
+                    #     prompt=f"""\
+                    #     Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                    #     L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
                         
-                        Texte à transformer : "{transcript}"
-                        """,
-                        max_tokens=1000,
-                        temperature=0.1,           
+                    #     Texte à transformer : "{transcript}"
+                    #     """,
+                    #     max_tokens=1000,
+                    #     temperature=0.1,           
+                    # )
+                    resp = openai.ChatCompletion.create(
+                        model="gpt-4-1106-preview",
+                        messages=[
+                            {"role": "system", "content": "Tu es un expert SEO."},
+                            {"role": "user", "content": f"""Transforme le texte ci-dessous sous forme de dialogue. Pour information, il y a deux interlocuteurs. Ne change pas le texte, réécrit le comme il est, juste sous forme de dialogue : revient à la ligne quand l'interlocuteur change.
+                                L'un des interlocuteurs se nomme Koralyne et pose des questions. L'autre se nomme SIR et lui répond.add()
+                                
+                                Texte à transformer : "{transcript}"
+                                """
+                            },
+                        ]
                     )
                     st.write(resp["choices"][0]["text"])
             else:

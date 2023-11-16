@@ -8,10 +8,10 @@ import pandas as pd
 st.set_page_config(page_title="Adcom - ARC", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
 # DEV
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # PROD
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title('Assistance à la Rédaction de Contenu - Classique')
 
