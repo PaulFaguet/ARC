@@ -11,11 +11,19 @@ class ARC_Classique:
         return prompt
     
     def generate_answer(self, user_text_input: str, user_word_number_input: int, user_temperature_input: int):
-        response = openai.Completion.create(
-            engine = 'text-davinci-003',
-            prompt = self.create_prompt(user_text_input, user_word_number_input),
-            temperature = user_temperature_input,
-            max_tokens = 2000,
+        # response = openai.Completion.create(
+        #     engine = 'text-davinci-003',
+        #     prompt = self.create_prompt(user_text_input, user_word_number_input),
+        #     temperature = user_temperature_input,
+        #     max_tokens = 2000,
+        # )
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": "Tu es un expert SEO."},
+                {"role": "user", "content": self.create_prompt(user_text_input, user_word_number_input)},
+            ]
         )
 
-        return response['choices'][0]['text']
+        return response.choices[0].message.content

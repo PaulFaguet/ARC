@@ -5,7 +5,7 @@ import os
 import openai
 import pandas as pd
 
-st.set_page_config(page_title="Adcom - OpenAI", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Adcom - ARC", page_icon="favicon.ico", layout="wide", initial_sidebar_state="expanded")
 
 # DEV
 # openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -19,6 +19,7 @@ arc_classique = ARC_Classique()
 df_examples = pd.read_json(r'prompt_examples.json')
 
 with st.sidebar:
+    st.write('Version de chatGPT utilisée : gpt-4-1106-preview')
     st.write("Quelques documentations : %s" % ", ".join(["https://beta.openai.com/examples", "https://www.webrankinfo.com/dossiers/conseils/chatgpt-seo", "https://learnprompting.org/docs/intro", "https://flowgpt.com/"]))
 
 upper_col1, upper_col2 = st.columns(2)

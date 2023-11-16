@@ -25,7 +25,7 @@ with template_download_col2:
 st.info("Téléchargez le fichier Template_OpenAI.xlsx ci-dessus, remplissez-le et importez-le dans l'application ci-dessous. Pensez à remplir les champs indiqués comme obligatoires.")
 st.info("Pour une meilleure lecture et compréhension du fichier d'exemple, pensez à aligner le texte au centre, à centrer le contenu et à activer le renvoi à la ligne automatique.")
 
-st.warning("Il y a 2 solutions pour récupérer les résultats. La 1ère consiste à attendre que fichier ait été traité entièrement. La 2nde consiste à recevoir les résultats un à un par mail au fur et à mesure de leur génération. Cette 2nde solution est plus longue mais permet de récupérer les résultats plus rapidement. Les deux solutions sont cumulables.")
+st.warning("Il y a 2 solutions pour récupérer les résultats. La 1ère consiste à attendre que fichier ait été traité entièrement. La 2nde consiste à recevoir les résultats un à un par mail au fur et à mesure de leur génération. Les deux solutions sont cumulables.")
 
 file_input = st.file_uploader("Importer un fichier XLSX", type="xlsx")
 email_col1, email_col2 = st.columns([1, 2])
@@ -34,7 +34,7 @@ with email_col1:
     export_mail = True if export_mail == "Oui" else False
 if export_mail == True:
     with email_col2:
-        mail_input = st.text_input("Adresse mail")
+        mail_input = st.text_input("Adresse mail", value="paul.faguet@axess.fr")
 else:
     mail_input = None
 
